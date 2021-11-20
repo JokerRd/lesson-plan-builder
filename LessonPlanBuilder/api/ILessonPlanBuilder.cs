@@ -18,8 +18,13 @@ namespace LessonPlanBuilder.api
         /// <param name="planParameters"> входные параметры для генерации расписания </param>
         /// <param name="settings"> системные настройки генератора</param>
         /// <returns>Список составленных расписаний</returns>
-        public List<LessonPlan> GenerateLessonPlan(LessonPlanParameters planParameters, GenerateSettings settings);
+        public List<LessonPlan> GenerateLessonPlan(LessonPlanParameters planParameters, GenerateSettings settings = null);
 
+        
+        
+        
+        
+        
         /// <summary>
         /// Попытаться получить уже готовые расписания, если они есть, во время работы основной генерации.
         /// </summary>
