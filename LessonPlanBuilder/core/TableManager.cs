@@ -1,36 +1,50 @@
 using System.Collections.Generic;
 using LessonPlanBuilder.core.model;
+using LessonPlanBuilder.core.services;
 
 namespace LessonPlanBuilder.core
 {
     public class TableManager<TItem> : ITableManager<TItem>
     {
         private IRowManager<TItem> RowManager { get; }
-        
-        private IRowService<TItem> RowService { get; }
-        
 
-        public TableManager(IRowService<TItem> rowService, IRowManager<TItem> rowManager)
+        private IRowService<TItem> RowService { get; }
+
+
+        public TableManager(IRowManager<TItem> rowManager, IRowService<TItem> rowService)
         {
             RowService = rowService;
             RowManager = rowManager;
         }
-        
-        public bool TryPutItemsInTable(List<Row<TItem>> rows, List<TItem> items)
+
+        public bool TryPutItemsInTable(List<Row<TItem>> rows, Queue<TItem> items)
         {
-            foreach (var item in items)
+            var item = items.Dequeue();
+            foreach (var row in rows)
             {
-                foreach (var row in rows)
+                if (RowService.IsPutInRow(item, row))
                 {
-                    if (RowService.IsPutInRow(item, row))
+                    var index = 0;
+                    while (index < row.Cells.Length)
                     {
-                        var resultPutItem = RowManager.TryPutItemInRow(item, row, 0);
+                        var resultPutItem = RowManager.TryPutItemInRow(item, row, index);
+                        if (!resultPutItem.IsPut)
+                        {
+                            break;
+                        }
+
+                        if (items.Count <= 0)
+                        {
+                            return true;
+                        }
+
+                        item = items.Dequeue();
+                        index = resultPutItem.IndexPut + 1;
                     }
                 }
             }
-
-            return true;
+            
+            return items.Count > 0;
         }
-        
     }
 }

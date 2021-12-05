@@ -1,6 +1,6 @@
 using LessonPlanBuilder.core.model;
 
-namespace LessonPlanBuilder.core
+namespace LessonPlanBuilder.core.services
 {
     public interface ICellService<TItem>
     {

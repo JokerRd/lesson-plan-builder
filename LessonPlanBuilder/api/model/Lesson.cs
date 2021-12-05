@@ -15,5 +15,9 @@ namespace LessonPlanBuilder.api.model
             Count = count;
             Teacher = teacher;
         }
+
+        public Lesson()
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
 using LessonPlanBuilder.core.model;
+using LessonPlanBuilder.core.services;
 
 namespace LessonPlanBuilder.core
 {
