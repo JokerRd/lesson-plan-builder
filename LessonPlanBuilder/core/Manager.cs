@@ -9,12 +9,12 @@ namespace LessonPlanBuilder.core
     {
         private ITableManager<LessonInfo> TableManager { get; }
 
-        private IGeneratorSequenceItem<LessonInfo> Generator { get; }
+        private IGeneratorSequenceItem<Lesson> Generator { get; }
         
 
-        public Manager(List<Lesson> lessonInfos)
+        public Manager(List<Lesson> lessons)
         {
-            Generator = new GeneratorSequenceItem<LessonInfo>(lessonInfos);
+            Generator = new GeneratorSequenceItem<Lesson>(lessons);
         }
 
 
@@ -23,7 +23,7 @@ namespace LessonPlanBuilder.core
             for (var i = 0; i < 5; i++)
             {
                 var table = new List<Row<Lesson>>();
-                var items = Generator.Generate(new List<LessonInfo>());
+                var items = Generator.Generate(new List<Lesson>());
                 TableManager.TryPutItemsInTable(table, items);
             }
         }
