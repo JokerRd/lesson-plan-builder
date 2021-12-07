@@ -7,14 +7,14 @@ namespace LessonPlanBuilder.core
 {
     public class Manager
     {
-        private TableManager<LessonInfo> TableManager { get; }
+        private ITableManager<LessonInfo> TableManager { get; }
 
-        private IGeneratorSequenceItem<LessonInfo, Lesson> Generator { get; }
+        private IGeneratorSequenceItem<LessonInfo> Generator { get; }
         
 
         public Manager(List<Lesson> lessonInfos)
         {
-            
+            Generator = new GeneratorSequenceItem<LessonInfo>(lessonInfos);
         }
 
 
@@ -23,7 +23,7 @@ namespace LessonPlanBuilder.core
             for (var i = 0; i < 5; i++)
             {
                 var table = new List<Row<Lesson>>();
-                var items = Generator.Generate());
+                var items = Generator.Generate(new List<LessonInfo>());
                 TableManager.TryPutItemsInTable(table, items);
             }
         }

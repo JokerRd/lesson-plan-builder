@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace LessonPlanBuilder.core.generators
 {
-    public interface IGeneratorSequenceItem<TItem, TInfoItem>
+    public interface IGeneratorSequenceItem<TInfoItem>
     {
-        public Queue<TItem> Generate(List<TInfoItem> items);
+        public Queue<TInfoItem> Generate(List<TInfoItem> items);
     }
 }
