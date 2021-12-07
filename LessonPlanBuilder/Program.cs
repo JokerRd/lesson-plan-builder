@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using LessonPlanBuilder.api.model;
 using LessonPlanBuilder.core;
-using LessonPlanBuilder.core.model;
+using LessonPlanBuilder.core.restrictions;
 using LessonPlanBuilder.core.services;
+using Ninject;
 
 namespace LessonPlanBuilder
 {
@@ -11,23 +12,32 @@ namespace LessonPlanBuilder
         public static void Main(string[] args)
         {
             var shifter = new Shifter<Lesson>();
-            var cellService = new CellServices<Lesson>();
-            var rowManager = new RowManager<Lesson>(shifter, cellService);
-            var rowService = new RowService<Lesson>();
-            var tableManager = new TableManager<Lesson>(rowManager, rowService);
-            var rows = new List<Row<Lesson>>()
+            var countLessonRest = new CountLessonPerDayRestriction(3);
+            var countLessonRestCell = new CountLessonPerDayRestrictionForCell(3);
+            var twoConsLessonRest = new TwoConsecutiveLessonsRestriction();
+            var cellService = new CellServices<Lesson>(new List<IRestrictionOnCell<Lesson>>()
             {
-                new Row<Lesson>(new Cell<Lesson>[] {new(), new(), new()}),
-                new Row<Lesson>(new Cell<Lesson>[] {new(), new(), new()}),
-                new Row<Lesson>(new Cell<Lesson>[] {new(), new(), new()})
-            };
-            var queue = new Queue<Lesson>();
-            queue.Enqueue(new Lesson("1", 1, null));
-            queue.Enqueue(new Lesson("2", 1, null));
-            queue.Enqueue(new Lesson("3", 1, null));
-            tableManager.TryPutItemsInTable(rows, queue);
-
+                twoConsLessonRest,
+                countLessonRestCell
+            });
+            var rowManager = new RowManager<Lesson>(shifter, cellService);
+            var rowService = new RowService<Lesson>(new List<IRestrictionOnRow<Lesson>>()
+            {
+                countLessonRest
+            });
+            var tableManager = new TableManager<Lesson>(rowManager, rowService);
+            var manager = new Manager(tableManager, new List<Lesson>()
+            {
+                new("1"), new("1"), new("1"), new("1"), new("1"),
+                new("2"), new("2"), new("3"), new("3"), new("4")
+            });
+            manager.GenerateLessonPlan(5, 6, 4);
         }
 
+        private static void Init()
+        {
+            var container = new StandardKernel();
+            container.Bind<IShifter<Lesson>>().To<Shifter<Lesson>>();
+        }
     }
 }

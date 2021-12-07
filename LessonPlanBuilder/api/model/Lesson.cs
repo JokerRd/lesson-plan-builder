@@ -16,8 +16,19 @@ namespace LessonPlanBuilder.api.model
             Teacher = teacher;
         }
 
+        public Lesson(string name)
+        {
+            Name = name;
+        }
+
         public Lesson()
         {
+            
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
