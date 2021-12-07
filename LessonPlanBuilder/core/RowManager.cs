@@ -20,7 +20,7 @@ namespace LessonPlanBuilder.core
             var cells = row.Cells;
             for (var i = start; i < cells.Length; i++)
             {
-                if (CellService.IsPutInCell(item, cells[i]))
+                if (CellService.IsPutInCell(item, row, i))
                 {
                     Shifter.PutInCell(item, cells[i]);
                     return new ResultPutItem(true, i);
