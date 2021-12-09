@@ -1,12 +1,14 @@
-namespace LessonPlanBuilder.api.model
+﻿namespace LessonPlanBuilder.api.model
 {
-    public class Teacher
-    {
-        public string Name;
+	public class Teacher
+	{
+		public readonly string Name;
+		public readonly Schedule Schedule;
 
-        public Teacher(string name)
-        {
-            Name = name;
-        }
-    }
+		public Teacher(string name, Schedule schedule)
+		{
+			Schedule = schedule;
+			Name = name;
+		}
+	}
 }
