@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using LessonPlanBuilder.api.model.enums;
 
 namespace LessonPlanBuilder.api.model
@@ -16,6 +16,12 @@ namespace LessonPlanBuilder.api.model
 		{
 			get => cells[(int)day, (int)lesson];
 			set => cells[(int)day, (int)lesson] = value;
+		}
+		
+		public ScheduleCell this[int day, int lesson]
+		{
+			get => cells[day, lesson];
+			set => cells[day, lesson] = value;
 		}
 	}
 }

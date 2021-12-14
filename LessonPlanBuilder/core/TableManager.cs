@@ -44,7 +44,7 @@ namespace LessonPlanBuilder.core
                 }
             }
             
-            return items.Count > 0;
+            return items.Count <= 0;
         }
     }
 }

@@ -13,11 +13,11 @@ namespace LessonPlanBuilder.api
 
         public List<Teacher> Teachers { get; }
 
-        public List<Room> Rooms { get; }
+        public List<Classroom> Rooms { get; }
 
         public int CountLessonDay { get; }
 
-        public LessonPlanParameters(List<Lesson> lessons, List<Teacher> teachers, List<Room> rooms, int countLessonDay)
+        public LessonPlanParameters(List<Lesson> lessons, List<Teacher> teachers, List<Classroom> rooms, int countLessonDay)
         {
             Lessons = lessons;
             Teachers = teachers;

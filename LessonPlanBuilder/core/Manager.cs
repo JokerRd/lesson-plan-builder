@@ -10,13 +10,13 @@ namespace LessonPlanBuilder.core
     {
         private ITableManager<Lesson> TableManager { get; }
 
-        private IGeneratorSequenceItem<Lesson> Generator { get; }
+        private IGeneratorSequenceItem<Lesson, Subject> Generator { get; }
         
 
-        public Manager(TableManager<Lesson> tableManager, List<Lesson> lessons)
+        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Lesson, Subject> generator)
         {
             TableManager = tableManager;
-            Generator = new GeneratorSequenceItem<Lesson>(lessons);
+            Generator = generator;
         }
 
 
@@ -62,9 +62,9 @@ namespace LessonPlanBuilder.core
                 var cells = new Cell<Lesson>[countCell];
                 for (var j = 0; j < countCell; j++)
                 {
-                    cells[j] = new Cell<Lesson>();
+                    cells[j] = new Cell<Lesson>(j);
                 }
-                result.Add(new Row<Lesson>(cells));
+                result.Add(new Row<Lesson>(cells, i));
             }
             return result;
         }

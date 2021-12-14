@@ -10,5 +10,10 @@
 			Subject = subject;
 			Id = id;
 		}
+
+		public override string ToString()
+		{
+			return $"{Subject.Name} N{Id}";
+		}
 	}
 }

@@ -12,9 +12,9 @@ namespace LessonPlanBuilder.core.restrictions
                 return true;
             }
 
-            if (!row.Cells[indexInPut - 2].IsEmpty && row.Cells[indexInPut - 2].Item.Name == item.Name)
+            if (!row.Cells[indexInPut - 2].IsEmpty && row.Cells[indexInPut - 2].Item.Subject.Name == item.Subject.Name)
             {
-                if (!row.Cells[indexInPut - 1].IsEmpty && row.Cells[indexInPut - 1].Item.Name == item.Name)
+                if (!row.Cells[indexInPut - 1].IsEmpty && row.Cells[indexInPut - 1].Item.Subject.Name == item.Subject.Name)
                 {
                     return false;
                 }

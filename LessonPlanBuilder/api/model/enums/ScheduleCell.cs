@@ -2,8 +2,8 @@
 {
 	public enum ScheduleCell
 	{
-		Impossible,
 		Free,
-		Busy
+		Busy,
+		Impossible
 	}
 }
