@@ -8,10 +8,10 @@ namespace LessonPlanBuilder.api.model
 		public readonly string Name;
 		public readonly int LessonsCount;
 		public readonly Teacher Teacher;
-		public readonly ClassroomType ClassroomType;
+		public readonly string ClassroomType;
 		public readonly HashSet<Classroom> AvailableClassrooms;
 
-		public Subject(string name, int lessonsCount, ClassroomType classroomType, Teacher teacher,
+		public Subject(string name, int lessonsCount, string classroomType, Teacher teacher,
 			HashSet<Classroom> availableClassrooms)
 		{
 			Name = name;

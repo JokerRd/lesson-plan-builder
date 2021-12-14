@@ -6,12 +6,12 @@ namespace LessonPlanBuilder.api.model
 	{
 		public readonly string Name;
 		public readonly Schedule Schedule;
-		public readonly ClassroomType Type;
+		public readonly string ClassroomType;
 
-		public Classroom(string name, ClassroomType type, Schedule schedule)
+		public Classroom(string name, string classroomType, Schedule schedule)
 		{
 			Name = name;
-			Type = type;
+			ClassroomType = classroomType;
 			Schedule = schedule;
 		}
 	}
