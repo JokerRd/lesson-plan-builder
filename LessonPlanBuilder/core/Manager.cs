@@ -13,10 +13,10 @@ namespace LessonPlanBuilder.core
         private IGeneratorSequenceItem<Lesson> Generator { get; }
         
 
-        public Manager(TableManager<Lesson> tableManager, List<Lesson> lessons)
+        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Lesson> generator)
         {
             TableManager = tableManager;
-            Generator = new GeneratorSequenceItem<Lesson>(lessons);
+            Generator = generator;
         }
 
 

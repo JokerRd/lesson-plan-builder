@@ -1,4 +1,5 @@
 ﻿using LessonPlanBuilder.api.model.enums;
+using DayOfWeek = LessonPlanBuilder.api.model.enums.DayOfWeek;
 
 namespace LessonPlanBuilder.api.model
 {
