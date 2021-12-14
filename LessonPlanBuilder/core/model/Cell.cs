@@ -5,6 +5,8 @@ namespace LessonPlanBuilder.core.model
     public class Cell<TItem>
     {
 
+        public int Number { get; }
+
         private TItem item;
         public TItem Item
         {
@@ -18,13 +20,15 @@ namespace LessonPlanBuilder.core.model
 
         public bool IsEmpty { get; private set; }
 
-        public Cell(TItem item)
+        public Cell(TItem item, int number)
         {
             Item = item;
+            Number = number;
         }
 
-        public Cell()
+        public Cell(int number)
         {
+            Number = number;
             IsEmpty = true;
         }
 

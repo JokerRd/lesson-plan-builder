@@ -13,6 +13,8 @@ namespace LessonPlanBuilder
     {
         public static void Main(string[] args)
         {
+            var table = Utils.CreateScheduleCells(5, 6);
+            Utils.PrintTwoArray(table);
         }
 
         public static void Init(List<Lesson> lessons)
@@ -22,6 +24,9 @@ namespace LessonPlanBuilder
             container.Bind<IRestrictionOnCell<Lesson>>().ToConstant(new CountLessonPerDayRestrictionForCell(4));
             container.Bind<IRestrictionOnCell<Lesson>>().To<TwoConsecutiveLessonsRestriction>();
             container.Bind<IRestrictionOnRow<Lesson>>().ToConstant(new CountLessonPerDayRestriction(4));
+            container.Bind<IRestrictionOnCell<Lesson>>().To<ClassroomFreeRestriction>();
+            container.Bind<IRestrictionOnCell<Lesson>>().To<SuitableClassroomType>();
+            container.Bind<IRestrictionOnCell<Lesson>>().To<TeacherFreeRestriction>();
             container.Bind<IRowService<Lesson>>().To<RowService<Lesson>>();
             container.Bind<ICellService<Lesson>>().To<CellServices<Lesson>>();
             container.Bind<IRowManager<Lesson>>().To<RowManager<Lesson>>();
