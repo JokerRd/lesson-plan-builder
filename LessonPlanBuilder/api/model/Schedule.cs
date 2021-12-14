@@ -1,4 +1,5 @@
-﻿using LessonPlanBuilder.api.model.enums;
+﻿using System;
+using LessonPlanBuilder.api.model.enums;
 
 namespace LessonPlanBuilder.api.model
 {

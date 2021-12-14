@@ -1,6 +1,4 @@
-﻿using LessonPlanBuilder.api.model.enums;
-
-namespace LessonPlanBuilder.api.model
+﻿namespace LessonPlanBuilder.api.model
 {
 	public class Classroom
 	{

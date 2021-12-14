@@ -1,6 +1,6 @@
 ﻿namespace LessonPlanBuilder.api.model.enums
 {
-	public enum ScheduleCellStatus
+	public enum ScheduleCell
 	{
 		Impossible,
 		Free,

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using LessonPlanBuilder.api.model.enums;
 
 namespace LessonPlanBuilder.api.model
 {
