@@ -62,9 +62,9 @@ namespace LessonPlanBuilder.core
                 var cells = new Cell<Lesson>[countCell];
                 for (var j = 0; j < countCell; j++)
                 {
-                    cells[j] = new Cell<Lesson>();
+                    cells[j] = new Cell<Lesson>(j);
                 }
-                result.Add(new Row<Lesson>(cells));
+                result.Add(new Row<Lesson>(cells, i));
             }
             return result;
         }
