@@ -10,10 +10,10 @@ namespace LessonPlanBuilder.core
     {
         private ITableManager<Lesson> TableManager { get; }
 
-        private IGeneratorSequenceItem<Lesson> Generator { get; }
+        private IGeneratorSequenceItem<Lesson, Subject> Generator { get; }
         
 
-        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Lesson> generator)
+        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Lesson, Subject> generator)
         {
             TableManager = tableManager;
             Generator = generator;
