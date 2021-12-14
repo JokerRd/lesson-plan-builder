@@ -4,7 +4,6 @@ using LessonPlanBuilder.core;
 using LessonPlanBuilder.core.generators;
 using LessonPlanBuilder.core.restrictions;
 using LessonPlanBuilder.core.services;
-using LessonPlanBuilder.test;
 using Ninject;
 
 namespace LessonPlanBuilder
@@ -13,11 +12,16 @@ namespace LessonPlanBuilder
     {
         public static void Main(string[] args)
         {
-            var table = Utils.CreateScheduleCells(5, 6);
-            Utils.PrintTwoArray(table);
+            var teachers = Utils.CreateTeachers(5, 6, 7);
+            var classrooms = Utils.CreateClassrooms(10, 6, 7);
+            var listAvailableClassroom = Utils.CreateHashSetClassroom(classrooms, 4, 5);
+            var subjects = Utils.CreateSubject(teachers, listAvailableClassroom);
+            var lessons = Utils.CreateLessons(subjects);
+            var manager = Init(lessons);
+            manager.GenerateLessonPlan(6, 7, 5);
         }
 
-        public static void Init(List<Lesson> lessons)
+        public static Manager Init(List<Lesson> lessons)
         {
             var container = new StandardKernel();
             container.Bind<IShifter<Lesson>>().To<Shifter<Lesson>>();
@@ -33,6 +37,7 @@ namespace LessonPlanBuilder
             container.Bind<IGeneratorSequenceItem<Lesson>>().ToConstant(new GeneratorSequenceItem<Lesson>(lessons));
             container.Bind<ITableManager<Lesson>>().To<TableManager<Lesson>>();
             container.Bind<Manager>().ToSelf();
+            return container.Get<Manager>();
         }
     }
 }

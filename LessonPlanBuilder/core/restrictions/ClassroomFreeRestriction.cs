@@ -10,7 +10,8 @@ public class ClassroomFreeRestriction : IRestrictionOnCell<Lesson>
     {
         var cell = row.Cells[indexInPut];
         var classrooms = item.Subject.AvailableClassrooms;
-        return classrooms
-            .All(classroom => classroom.Schedule[row.Number, cell.Number].Status != ScheduleCellStatus.Busy);
+        var result = classrooms
+            .Any(classroom => classroom.Schedule[row.Number, cell.Number].Status != ScheduleCellStatus.Busy);
+        return result;
     }
 }

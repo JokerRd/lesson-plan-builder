@@ -43,31 +43,44 @@ public class Utils
         Utils.PutRandomInTwoArray(table,
             () => new ScheduleCell((ScheduleCellStatus) random.Next(2)));
         return table;
+
+        return CreateFreeScheduleCells(countDays, countLessons);
     }
 
-    public static List<Teacher> CreateTeachers(int countTeacher)
+    private static ScheduleCell[,] CreateFreeScheduleCells(int countDays, int countLessons)
+    {
+        var table = new ScheduleCell[countDays, countLessons];
+        return table;
+    }
+
+    public static List<Teacher> CreateTeachers(int countTeacher, int countDays, int countLessons)
     {
         var teachers = new List<Teacher>();
-        for (var i = 0; i < countTeacher; countTeacher++)
+        for (var i = 0; i < countTeacher; i++)
         {
+            var table = CreateScheduleCells(countDays, countLessons);
+            PrintTwoArray(table);
             teachers.Add(new Teacher("Учитель" + (i + 1),
-                new Schedule(CreateScheduleCells(7, 7))));
+                new Schedule(table)));
         }
 
         return teachers;
     }
 
-    public static List<Classroom> CreateClassrooms(int countClassrooms)
+    public static List<Classroom> CreateClassrooms(int countClassrooms, int countDays, int countLessons)
     {
         var classrooms = new List<Classroom>();
         var random = new Random();
-        for (int i = 0; i < countClassrooms; i++)
+        for (var i = 0; i < countClassrooms; i++)
         {
+            var table = CreateScheduleCells(countDays, countLessons);
+            PrintTwoArray(table);
             classrooms.Add(new Classroom("Аудитория" + (i + 1),
                 (ClassroomType) random.Next(3),
-                new Schedule(CreateScheduleCells(7, 7))));
+                new Schedule(table)));
         }
 
+        
         return classrooms;
     }
 
@@ -83,6 +96,28 @@ public class Utils
         }
 
         return subjects;
+    }
+
+    public static List<HashSet<Classroom>> CreateHashSetClassroom(List<Classroom> classroomsInfo,
+        int countClassroomInHashSet, int countListHashSet)
+    {
+        var classrooms = new List<HashSet<Classroom>>();
+        var random = new Random();
+        for (var i = 0; i < countListHashSet; i++)
+        {
+            var set = new HashSet<Classroom>();
+            for (var j = 0; j < countClassroomInHashSet; j++)
+            {
+                var classRoom = classroomsInfo[random.Next(classroomsInfo.Count)];
+                if (!set.Contains(classRoom))
+                {
+                    set.Add(classRoom);
+                }
+            }
+            classrooms.Add(set);
+        }
+
+        return classrooms;
     }
 
     public static List<Lesson> CreateLessons(List<Subject> subjects)

@@ -7,8 +7,9 @@ public class SuitableClassroomType : IRestrictionOnCell<Lesson>
 {
     public bool Check(Lesson item, Row<Lesson> row, int indexInPut)
     {
-        var cell = row.Cells[indexInPut];
-        return item.Subject.AvailableClassrooms
-            .Any(classroom => classroom.Type == cell.Item.Subject.ClassroomType);
+        return true;
+        var result = item.Subject.AvailableClassrooms
+            .Any(classroom => classroom.Type == item.Subject.ClassroomType);
+        return result;
     }
 }
