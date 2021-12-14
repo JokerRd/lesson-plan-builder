@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LessonPlanBuilder.api.generator;
 using LessonPlanBuilder.api.model;
+using LessonPlanBuilder.api.tableHeadingsGenerator;
 
 namespace LessonPlanBuilder.api.initializer
 {

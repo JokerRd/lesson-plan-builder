@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace LessonPlanBuilder.api.generator
+namespace LessonPlanBuilder.api.tableHeadingsGenerator
 {
 	public static class Generator
 	{
