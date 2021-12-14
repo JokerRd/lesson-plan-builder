@@ -4,6 +4,7 @@ using LessonPlanBuilder.core;
 using LessonPlanBuilder.core.generators;
 using LessonPlanBuilder.core.restrictions;
 using LessonPlanBuilder.core.services;
+using LessonPlanBuilder.test;
 using Ninject;
 
 namespace LessonPlanBuilder
@@ -12,10 +13,9 @@ namespace LessonPlanBuilder
     {
         public static void Main(string[] args)
         {
-
         }
 
-        private static void Init(List<Lesson> lessons)
+        public static void Init(List<Lesson> lessons)
         {
             var container = new StandardKernel();
             container.Bind<IShifter<Lesson>>().To<Shifter<Lesson>>();
