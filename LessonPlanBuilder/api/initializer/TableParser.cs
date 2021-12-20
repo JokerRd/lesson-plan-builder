@@ -7,8 +7,17 @@ using LessonPlanBuilder.api.tableHeadingsGenerator;
 
 namespace LessonPlanBuilder.api.initializer
 {
-	public static class TableParser
+	public class TableParser
 	{
+		public readonly int SchoolDaysPerWeek;
+		public readonly int LessonsPerDay;
+
+		public TableParser(int schoolDaysPerWeek, int lessonsPerDay)
+		{
+			SchoolDaysPerWeek = schoolDaysPerWeek;
+			LessonsPerDay = lessonsPerDay;
+		}
+		
 		public static Subject ParseSubject(string[] column, IReadOnlyDictionary<string, Teacher> teachers,
 			IReadOnlyDictionary<string, HashSet<Classroom>> classrooms)
 		{
@@ -17,23 +26,23 @@ namespace LessonPlanBuilder.api.initializer
 				classrooms[column[3]]);
 		}
 
-		public static Classroom ParseClassroom(string[] column)
+		public Classroom ParseClassroom(string[] column)
 		{
 			if (column.Length != Generator.ClassroomsRowsCount) throw new ArgumentException();
 			return new Classroom(column[0], column[1], ParseSchedule(column[2..]));
 		}
 
-		public static Teacher ParseTeacher(string[] column)
+		public Teacher ParseTeacher(string[] column)
 		{
 			if (column.Length != Generator.TeachersRowsCount) throw new ArgumentException();
 			return new Teacher(column[0], ParseSchedule(column[1..]));
 		}
 
-		private static Schedule ParseSchedule(string[] weeklySchedule)
+		private Schedule ParseSchedule(string[] weeklySchedule)
 		{
-			var schedule = new Schedule(new ScheduleCell[7, 8]);
+			var schedule = new Schedule(new ScheduleCell[SchoolDaysPerWeek, LessonsPerDay]);
 
-			foreach (var dayOfWeek in Enumerable.Range(1, 7))
+			foreach (var dayOfWeek in Enumerable.Range(1, SchoolDaysPerWeek))
 			{
 				foreach (var lessonNumber in ParseDailySchedule(weeklySchedule[dayOfWeek - 1]))
 				{

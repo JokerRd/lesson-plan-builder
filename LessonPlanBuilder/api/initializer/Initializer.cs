@@ -5,9 +5,16 @@ using LessonPlanBuilder.api.tableHeadingsGenerator;
 
 namespace LessonPlanBuilder.api.initializer
 {
-	public static class Initializer
+	public class Initializer
 	{
-		public static IEnumerable<Subject> Initialize(string[,] subjectsTable, string[,] teachersTable,
+		private readonly TableParser tableParser;
+
+		public Initializer(TableParser tableParser)
+		{
+			this.tableParser = tableParser;
+		}
+
+		public IEnumerable<Subject> Initialize(string[,] subjectsTable, string[,] teachersTable,
 			string[,] classroomsTable)
 		{
 			var teachers = InitializeTeachers(teachersTable);
@@ -16,17 +23,17 @@ namespace LessonPlanBuilder.api.initializer
 				yield return TableParser.ParseSubject(column, teachers, classrooms);
 		}
 
-		private static Dictionary<string, Teacher> InitializeTeachers(string[,] teachersTable)
+		private Dictionary<string, Teacher> InitializeTeachers(string[,] teachersTable)
 		{
 			return GetColumns(teachersTable, Generator.TeachersRowsCount)
-				.Select(TableParser.ParseTeacher)
+				.Select(tableParser.ParseTeacher)
 				.ToDictionary(teacher => teacher.Name);
 		}
 
-		private static Dictionary<string, HashSet<Classroom>> InitializeClassrooms(string[,] classroomsTable)
+		private Dictionary<string, HashSet<Classroom>> InitializeClassrooms(string[,] classroomsTable)
 		{
 			return GetColumns(classroomsTable, Generator.ClassroomsRowsCount)
-				.Select(TableParser.ParseClassroom)
+				.Select(tableParser.ParseClassroom)
 				.ToDictionary(classroom => classroom.ClassroomType, _ => new HashSet<Classroom>());
 		}
 
