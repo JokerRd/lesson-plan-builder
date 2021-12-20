@@ -9,13 +9,13 @@ namespace LessonPlanBuilder.api.initializer
 {
 	public class TableParser
 	{
-		public readonly int SchoolDaysPerWeek;
-		public readonly int LessonsPerDay;
+		private readonly int schoolDaysPerWeek;
+		private readonly int lessonsPerDay;
 
 		public TableParser(int schoolDaysPerWeek, int lessonsPerDay)
 		{
-			SchoolDaysPerWeek = schoolDaysPerWeek;
-			LessonsPerDay = lessonsPerDay;
+			this.schoolDaysPerWeek = schoolDaysPerWeek;
+			this.lessonsPerDay = lessonsPerDay;
 		}
 		
 		public static Subject ParseSubject(string[] column, IReadOnlyDictionary<string, Teacher> teachers,
@@ -40,9 +40,9 @@ namespace LessonPlanBuilder.api.initializer
 
 		private Schedule ParseSchedule(string[] weeklySchedule)
 		{
-			var schedule = new Schedule(new ScheduleCell[SchoolDaysPerWeek, LessonsPerDay]);
+			var schedule = new Schedule(new ScheduleCell[schoolDaysPerWeek, lessonsPerDay]);
 
-			foreach (var dayOfWeek in Enumerable.Range(1, SchoolDaysPerWeek))
+			foreach (var dayOfWeek in Enumerable.Range(1, schoolDaysPerWeek))
 			{
 				foreach (var lessonNumber in ParseDailySchedule(weeklySchedule[dayOfWeek - 1]))
 				{
