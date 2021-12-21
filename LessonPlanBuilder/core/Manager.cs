@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
 using LessonPlanBuilder.api;
 using LessonPlanBuilder.api.model;
 using LessonPlanBuilder.core.generators;
 using LessonPlanBuilder.core.model;
+using LessonPlanBuilder.core.subjectAppraiser;
 
 namespace LessonPlanBuilder.core
 {
@@ -11,13 +10,16 @@ namespace LessonPlanBuilder.core
     {
         private ITableManager<Lesson> TableManager { get; }
 
-        private IGeneratorSequenceItem<Lesson, Subject> Generator { get; }
+        private ISubjectAppraiser<Subject> SubjectAppraiser { get; }
+        private IGeneratorSequenceItem<Subject> Generator { get; }
         
 
-        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Lesson, Subject> generator)
+        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Subject> generator, 
+            ISubjectAppraiser<Subject> subjectAppraiser)
         {
             TableManager = tableManager;
             Generator = generator;
+            SubjectAppraiser = subjectAppraiser;
         }
 
 
@@ -27,7 +29,7 @@ namespace LessonPlanBuilder.core
             for (var i = 0; i < countLessonPlan; i++)
             {
                 var table = CreateTable(countRow, countCell);
-                var items = Generator.Generate(new List<Lesson>());
+                var items = Generator.Generate(new Dictionary<Subject, int>());
                 if (TableManager.TryPutItemsInTable(table, items))
                 {
                     lessonPlans.Add(LessonPlanOutputBuilder.CreateLessonPlan(table));

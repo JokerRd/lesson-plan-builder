@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using LessonPlanBuilder.api.model;
+﻿using LessonPlanBuilder.api.model;
 using LessonPlanBuilder.core;
 using LessonPlanBuilder.core.generators;
 using LessonPlanBuilder.core.restrictions;
 using LessonPlanBuilder.core.services;
+using LessonPlanBuilder.core.subjectAppraiser;
 using Ninject;
 
 namespace LessonPlanBuilder
@@ -34,8 +34,9 @@ namespace LessonPlanBuilder
             container.Bind<IRowService<Lesson>>().To<RowService<Lesson>>();
             container.Bind<ICellService<Lesson>>().To<CellServices<Lesson>>();
             container.Bind<IRowManager<Lesson>>().To<RowManager<Lesson>>();
-            container.Bind<IGeneratorSequenceItem<Lesson>>().ToConstant(new GeneratorSequenceItem<Lesson>(lessons));
+            container.Bind<IGeneratorSequenceItem<Subject>>().ToSelf();
             container.Bind<ITableManager<Lesson>>().To<TableManager<Lesson>>();
+            container.Bind<ISubjectAppraiser<Subject>>().ToConstant(new SubjectAppraiser(6, 7));
             container.Bind<Manager>().ToSelf();
             return container.Get<Manager>();
         }

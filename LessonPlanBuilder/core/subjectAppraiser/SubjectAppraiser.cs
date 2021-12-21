@@ -4,7 +4,7 @@ using LessonPlanBuilder.api.model.enums;
 
 namespace LessonPlanBuilder.core.subjectAppraiser
 {
-	public class SubjectAppraiser
+	public class SubjectAppraiser : ISubjectAppraiser<Subject>
 	{
 		private readonly int schoolDaysPerWeek;
 		private readonly int lessonsPerDay;
