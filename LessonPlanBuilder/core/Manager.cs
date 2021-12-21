@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LessonPlanBuilder.api;
 using LessonPlanBuilder.api.model;
 using LessonPlanBuilder.core.generators;
 using LessonPlanBuilder.core.model;
@@ -20,17 +21,21 @@ namespace LessonPlanBuilder.core
         }
 
 
-        public void GenerateLessonPlan(int countRow, int countCell, int countLessonPlan)
+        public List<LessonPlan> GenerateLessonPlan(int countRow, int countCell, int countLessonPlan)
         {
+            var lessonPlans = new List<LessonPlan>();
             for (var i = 0; i < countLessonPlan; i++)
             {
                 var table = CreateTable(countRow, countCell);
                 var items = Generator.Generate(new List<Lesson>());
                 if (TableManager.TryPutItemsInTable(table, items))
                 {
+                    lessonPlans.Add(LessonPlanOutputBuilder.CreateLessonPlan(table));
                     PrintTable(table);
                 }
             }
+
+            return lessonPlans;
         }
 
         private void PrintTable(List<Row<Lesson>> table)

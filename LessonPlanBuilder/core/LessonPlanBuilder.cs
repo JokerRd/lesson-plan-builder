@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using LessonPlanBuilder.api;
+using LessonPlanBuilder.api.model;
 
 namespace LessonPlanBuilder.core
 {
@@ -8,6 +9,11 @@ namespace LessonPlanBuilder.core
         public List<LessonPlan> GenerateLessonPlan(LessonPlanParameters planParameters)
         {
             throw new System.NotImplementedException();
+        }
+
+        public List<LessonPlan> GenerateLessonPlan(List<Subject> subjects)
+        {
+            throw new NotImplementedException();
         }
 
         public List<LessonPlan> GenerateLessonPlan(LessonPlanParameters planParameters, GenerateSettings settings = null)

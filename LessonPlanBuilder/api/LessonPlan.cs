@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using LessonPlanBuilder.api.model;
+using LessonPlanBuilder.api.model.enums;
 
 namespace LessonPlanBuilder.api
 {
@@ -10,11 +9,23 @@ namespace LessonPlanBuilder.api
     /// </summary>
     public class LessonPlan
     {
-        public Dictionary<DayOfWeek, Dictionary<int, Lesson>> Plan { get; }
-
-        public LessonPlan(Dictionary<DayOfWeek, Dictionary<int, Lesson>> plan)
+        private readonly ApprovedLesson[,] plan;
+        public LessonPlan(ApprovedLesson[,] plan)
         {
-            Plan = plan;
+            this.plan = plan;
         }
+        
+        public ApprovedLesson this[DayOfWeek day, LessonNumber lesson]
+        {
+            get => plan[(int)day, (int)lesson];
+            set => plan[(int)day, (int)lesson] = value;
+        }
+		
+        public ApprovedLesson this[int day, int lesson]
+        {
+            get => plan[day, lesson];
+            set => plan[day, lesson] = value;
+        }
+
     }
 }

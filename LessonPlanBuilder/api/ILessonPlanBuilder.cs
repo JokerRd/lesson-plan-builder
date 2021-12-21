@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LessonPlanBuilder.api.model;
 
 namespace LessonPlanBuilder.api
 {
@@ -10,7 +11,7 @@ namespace LessonPlanBuilder.api
         /// </summary>
         /// <param name="planParameters">входные параметры для генерации расписания</param>
         /// <returns>Список составленных расписаний</returns>
-        public List<LessonPlan> GenerateLessonPlan(LessonPlanParameters planParameters);
+        public List<LessonPlan> GenerateLessonPlan(List<Subject> subjects);
         
         /// <summary>
         /// Аpi к библиотеки генерации расписаний
