@@ -17,6 +17,7 @@ public class ParserLessonPlanToOutputTable
                     table[i, j] = FormatInfoAboutLesson(lessonPlan[i, j]);
                 }
             }
+            results.Add(table);
         }
 
         return results;

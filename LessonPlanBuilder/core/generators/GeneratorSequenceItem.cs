@@ -8,16 +8,21 @@ namespace LessonPlanBuilder.core.generators
     public class GeneratorSequenceItem<TSubject> : IGeneratorSequenceItem<TSubject>
         where TSubject : Subject 
     {
-        private Dictionary<TSubject, int> lessonsGroupedBySameGrade = new();
+        private Dictionary<TSubject, int> lessonsGroupedBySameGrade = new Dictionary<TSubject, int>();
         private List<int> existGrades = new();
         private List<int> alreadyGeneratedSequences = new();
         private Dictionary<TSubject, int> currentShuffledDict;
+
+        public GeneratorSequenceItem()
+        {
+            
+        }
 
         public Queue<Lesson> Generate(Dictionary<TSubject, int> gradedLessons)
         {
             var generatedSequence = new Queue<Lesson>();
             //для первого вызова
-            if (lessonsGroupedBySameGrade == null)
+            if (lessonsGroupedBySameGrade.Count <= 1)
             {
                 GroupBySameGrade(gradedLessons);
                 TakeAllGradesNoRepeat(lessonsGroupedBySameGrade);

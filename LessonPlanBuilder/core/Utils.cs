@@ -12,7 +12,7 @@ public class Utils
         "Обычная",
         "Компьютерный класс"
     };
-
+    
     public static void PrintTwoArray<T>(T[,] array)
     {
         var countColumns = array.GetLength(0);
@@ -140,5 +140,12 @@ public class Utils
         }
 
         return lessons;
+    }
+
+    public static Dictionary<Subject, int> CreateGradeLessons(List<Subject> subjects, int maxGrade)
+    {
+        var random = new Random();
+        return subjects
+            .ToDictionary(subject => subject, subject => random.Next(1, maxGrade));
     }
 }
