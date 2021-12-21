@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LessonPlanBuilder", "LessonPlanBuilder.csproj", "{B03A4B1D-5D1D-4AB2-9615-196ECA0B519A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleSheetUILessonPlan", "..\GoogleSheetUILessonPlan\GoogleSheetUILessonPlan.csproj", "{993C791E-48A6-42DC-8556-58D62AF7FC72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B03A4B1D-5D1D-4AB2-9615-196ECA0B519A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03A4B1D-5D1D-4AB2-9615-196ECA0B519A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B03A4B1D-5D1D-4AB2-9615-196ECA0B519A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{993C791E-48A6-42DC-8556-58D62AF7FC72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{993C791E-48A6-42DC-8556-58D62AF7FC72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{993C791E-48A6-42DC-8556-58D62AF7FC72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{993C791E-48A6-42DC-8556-58D62AF7FC72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
