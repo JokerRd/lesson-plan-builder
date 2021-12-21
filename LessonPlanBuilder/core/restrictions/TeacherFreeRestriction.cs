@@ -10,7 +10,6 @@ public class TeacherFreeRestriction : IRestrictionOnCell<Lesson>
     {
         var cell = row.Cells[indexInPut];
         var scheduleCell = item.Subject.Teacher.Schedule[row.Number, cell.Number];
-        var result = scheduleCell.Status != ScheduleCellStatus.Busy;
-        return scheduleCell.Status != ScheduleCellStatus.Busy;
+        return scheduleCell!= ScheduleCell.Busy;
     }
 }

@@ -5,6 +5,14 @@ namespace LessonPlanBuilder.core;
 
 public class Utils
 {
+
+    private static List<string> ClassRoomType = new ()
+    {
+        "Лаборатория",
+        "Обычная",
+        "Компьютерный класс"
+    };
+
     public static void PrintTwoArray<T>(T[,] array)
     {
         var countColumns = array.GetLength(0);
@@ -41,7 +49,7 @@ public class Utils
         var table = new ScheduleCell[countDays, countLessons];
         var random = new Random();
         Utils.PutRandomInTwoArray(table,
-            () => new ScheduleCell((ScheduleCellStatus) random.Next(2)));
+            () => (ScheduleCell)random.Next(2));
         return table;
 
         return CreateFreeScheduleCells(countDays, countLessons);
@@ -76,7 +84,7 @@ public class Utils
             var table = CreateScheduleCells(countDays, countLessons);
             PrintTwoArray(table);
             classrooms.Add(new Classroom("Аудитория" + (i + 1),
-                (ClassroomType) random.Next(3),
+                ClassRoomType[random.Next(3)],
                 new Schedule(table)));
         }
 
@@ -92,7 +100,7 @@ public class Utils
         {
             var teacher = teachers[index];
             subjects.Add(new Subject("Предмет" + (index + 1), random.Next(1, 5),
-                (ClassroomType) random.Next(3), teacher, classrooms[index] ));
+                ClassRoomType[random.Next(3)], teacher, classrooms[index] ));
         }
 
         return subjects;
