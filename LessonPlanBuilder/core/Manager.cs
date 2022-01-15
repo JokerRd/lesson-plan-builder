@@ -9,12 +9,12 @@ namespace LessonPlanBuilder.core
     public class Manager
     {
         private ITableManager<Lesson> TableManager { get; }
-        private ISubjectAppraiser<Subject> SubjectAppraiser { get; }
-        private IGeneratorSequenceItem<Subject> Generator { get; }
+        private SubjectAppraiser SubjectAppraiser { get; }
+        private IGeneratorSequenceItem<Subject, Lesson> Generator { get; }
         
         
-        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Subject> generator, 
-            ISubjectAppraiser<Subject> subjectAppraiser)
+        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Subject, Lesson> generator, 
+            SubjectAppraiser subjectAppraiser)
         {
             TableManager = tableManager;
             Generator = generator;
@@ -29,7 +29,7 @@ namespace LessonPlanBuilder.core
             for (var i = 0; i < countLessonPlan; i++)
             {
                 var table = CreateTable(countRow, countCell);
-                var items = Generator.Generate(gradeLessons);
+                var items = Generator.Generate(SubjectAppraiser);
                 if (TableManager.TryPutItemsInTable(table, items))
                 {
                     lessonPlans.Add(LessonPlanOutputBuilder.CreateLessonPlan(table));

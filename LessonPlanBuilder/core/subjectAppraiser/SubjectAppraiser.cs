@@ -4,7 +4,7 @@ using LessonPlanBuilder.api.model.enums;
 
 namespace LessonPlanBuilder.core.subjectAppraiser
 {
-	public class SubjectAppraiser : ISubjectAppraiser<Subject>
+	public class SubjectAppraiser : Appraiser<Subject>
 	{
 		private readonly int schoolDaysPerWeek;
 		private readonly int lessonsPerDay;
@@ -18,7 +18,7 @@ namespace LessonPlanBuilder.core.subjectAppraiser
 		/// <summary>
 		/// Чем меньше значение, тем сложнее поставить предмет в рассписание
 		/// </summary>
-		public double AppraiseSubject(Subject subject)
+		public override double AppraiseItem(Subject subject)
 		{
 			return (
 				from day in Enumerable.Range(0, schoolDaysPerWeek)
