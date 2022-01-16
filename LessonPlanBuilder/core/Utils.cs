@@ -17,7 +17,7 @@ public class Utils
     {
         var countColumns = array.GetLength(0);
         var countRows = array.GetLength(1);
-        for (int i = 0; i < countRows; i++)
+        for (var i = 0; i < countRows; i++)
         {
             for (int j = 0; j < countColumns; j++)
             {
