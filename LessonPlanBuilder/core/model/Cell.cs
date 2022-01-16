@@ -40,7 +40,8 @@ namespace LessonPlanBuilder.core.model
         public TItem TakeItem()
         {
             var item = Item;
-            Item = default(TItem);
+            Item = default;
+            IsEmpty = true;
             return item;
         }
     }

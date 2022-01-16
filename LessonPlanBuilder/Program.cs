@@ -16,7 +16,7 @@ namespace LessonPlanBuilder
             var teachers = Utils.CreateTeachers(8, 6, 7);
             var classrooms = Utils.CreateClassrooms(10, 6, 7);
             var listAvailableClassroom = Utils.CreateHashSetClassroom(classrooms, 4, 8);
-            var subjects = Utils.CreateSubject(teachers, listAvailableClassroom);
+            var subjects = Utils.CreateSubjectList(teachers, listAvailableClassroom);
             var lessons = Utils.CreateLessons(subjects);
             var gradeLessons = Utils.CreateGradeLessons(subjects, 3);
             var manager = Init(lessons);
@@ -39,11 +39,15 @@ namespace LessonPlanBuilder
             container.Bind<IRestrictionOnCell<Lesson>>().To<SuitableClassroomType>();
             container.Bind<IRestrictionOnCell<Lesson>>().To<TeacherFreeRestriction>();
             container.Bind<IRowService<Lesson>>().To<RowService<Lesson>>();
-            container.Bind<ICellService<Lesson>>().To<CellServices<Lesson>>();
+            container.Bind<ICellService<Lesson>>().To<CellService<Lesson>>();
             container.Bind<IRowManager<Lesson>>().To<RowManager<Lesson>>();
-            container.Bind<IGeneratorSequenceItem<Subject>>().ToConstant(new GeneratorSequenceItem<Subject>());
+            var teachers = Utils.CreateTeachers(8, 6, 7);
+            var classrooms = Utils.CreateClassrooms(10, 6, 7);
+            var listAvailableClassroom = Utils.CreateHashSetClassroom(classrooms, 4, 8);
+            var subjects = Utils.CreateSubjectList(teachers, listAvailableClassroom);
+            container.Bind<IGeneratorSequenceItem<Subject, Lesson>>().ToConstant(new GeneratorSequenceItem(subjects));
             container.Bind<ITableManager<Lesson>>().To<TableManager<Lesson>>();
-            container.Bind<ISubjectAppraiser<Subject>>().ToConstant(new SubjectAppraiser(6, 7));
+            container.Bind<Appraiser<Subject>>().ToConstant(new SubjectAppraiser(6, 7));
             container.Bind<Manager>().ToSelf();
             return container.Get<Manager>();
         }

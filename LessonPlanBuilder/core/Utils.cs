@@ -1,5 +1,8 @@
 using LessonPlanBuilder.api.model;
 using LessonPlanBuilder.api.model.enums;
+using LessonPlanBuilder.core.model;
+using LessonPlanBuilder.core.restrictions;
+using LessonPlanBuilder.core.services;
 
 namespace LessonPlanBuilder.core;
 
@@ -12,7 +15,7 @@ public class Utils
         "Обычная",
         "Компьютерный класс"
     };
-    
+
     public static void PrintTwoArray<T>(T[,] array)
     {
         var countColumns = array.GetLength(0);
@@ -68,11 +71,16 @@ public class Utils
         {
             var table = CreateScheduleCells(countDays, countLessons);
             PrintTwoArray(table);
-            teachers.Add(new Teacher("Учитель" + (i + 1),
-                new Schedule(table)));
+            teachers.Add(CreateTeacher(i, table));
         }
 
         return teachers;
+    }
+
+    public static Teacher CreateTeacher(int index, ScheduleCell[,] table)
+    {
+        return new Teacher("Учитель" + (index + 1),
+            new Schedule(table));
     }
 
     public static List<Classroom> CreateClassrooms(int countClassrooms, int countDays, int countLessons)
@@ -92,18 +100,23 @@ public class Utils
         return classrooms;
     }
 
-    public static List<Subject> CreateSubject(List<Teacher> teachers, List<HashSet<Classroom>> classrooms)
+    public static List<Subject> CreateSubjectList(List<Teacher> teachers, List<HashSet<Classroom>> classrooms)
     {
         var subjects = new List<Subject>();
         var random = new Random();
         for (var index = 0; index < teachers.Count; index++)
         {
             var teacher = teachers[index];
-            subjects.Add(new Subject("Предмет" + (index + 1), random.Next(1, 5),
-                ClassRoomType[random.Next(3)], teacher, classrooms[index] ));
+            subjects.Add(CreateSubject(index, random, teacher, classrooms[index]));
         }
 
         return subjects;
+    }
+
+    public static Subject CreateSubject(int index, Random random, Teacher teacher, HashSet<Classroom> classroom)
+    {
+        return new Subject("Предмет" + (index + 1), random.Next(1, 5),
+            ClassRoomType[random.Next(3)], teacher, classroom);
     }
 
     public static List<HashSet<Classroom>> CreateHashSetClassroom(List<Classroom> classroomsInfo,
@@ -135,11 +148,16 @@ public class Utils
         {
             for (var i = 0; i < subject.LessonsCount; i++)
             {
-                lessons.Add(new Lesson(subject, i + 1));
+                lessons.Add(CreateLesson(subject, i));
             }
         }
 
         return lessons;
+    }
+
+    public static Lesson CreateLesson(Subject subject, int index)
+    {
+        return new Lesson(subject, index + 1);
     }
 
     public static Dictionary<Subject, int> CreateGradeLessons(List<Subject> subjects, int maxGrade)
@@ -147,5 +165,28 @@ public class Utils
         var random = new Random();
         return subjects
             .ToDictionary(subject => subject, subject => random.Next(1, maxGrade));
+    }
+    
+    public static CellService<Lesson> CreateCellServiceFilledRestrictions(Func<IRestrictionOnCell<Lesson>> generator,
+        int countRestrictions, Action<List<IRestrictionOnCell<Lesson>>> addedRestrictions)
+    {
+        var restrictions = new List<IRestrictionOnCell<Lesson>>();
+        for (var i = 0; i < countRestrictions; i++)
+        {
+            restrictions.Add(generator.Invoke());
+        }
+        addedRestrictions.Invoke(restrictions);
+        return new CellService<Lesson>(restrictions);
+    }
+
+    public static Cell<Lesson>[] CreateCells(int countCell)
+    {
+        var cells = new Cell<Lesson>[countCell];
+        for (var i = 0; i < countCell; i++)
+        {
+            cells[i] = new Cell<Lesson>(i);
+        }
+
+        return cells;
     }
 }
