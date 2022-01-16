@@ -9,7 +9,7 @@ namespace LessonPlanBuilder.core.generators
     public class GeneratorSequenceItem : IGeneratorSequenceItem<Subject, Lesson>
     {
         private readonly List<Subject> subjects;
-        private Dictionary<Subject, double> sortedSubsWithGrades = new();
+        private Dictionary<Subject, double> sortedSubsWithGrades;
         private double averageGradeDifference;
         private List<Dictionary<Subject, double>> groupedSubjectWithLowDifference = new();
         private Dictionary<Subject, double> currentShuffledDict;
@@ -25,7 +25,7 @@ namespace LessonPlanBuilder.core.generators
         public Queue<Lesson> Generate(Appraiser<Subject> appraiser)
         {
             // For first call
-            if (sortedSubsWithGrades.Count <= 0)
+            if (sortedSubsWithGrades == null)
             {
                 SortSubjectsByGrades(appraiser);
                 GetAverageSubjectGradeDifference();
