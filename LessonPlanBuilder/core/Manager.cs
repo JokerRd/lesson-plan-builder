@@ -9,12 +9,12 @@ namespace LessonPlanBuilder.core
     public class Manager
     {
         private ITableManager<Lesson> TableManager { get; }
-        private SubjectAppraiser SubjectAppraiser { get; }
+        private Appraiser<Subject> SubjectAppraiser { get; }
         private IGeneratorSequenceItem<Subject, Lesson> Generator { get; }
         
         
         public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Subject, Lesson> generator, 
-            SubjectAppraiser subjectAppraiser)
+            Appraiser<Subject> subjectAppraiser)
         {
             TableManager = tableManager;
             Generator = generator;
