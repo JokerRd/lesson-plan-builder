@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
@@ -33,25 +34,25 @@ namespace GoogleSheets
             });
         }
 
-        public string[][] GetTeachersSchedule()
+        public string[,] GetTeachersSchedule()
         {
             var rangeTeach = $"{sheet1}!A2:H100";
             return GetSchedule(8, rangeTeach);
         }
 
-        public string[][] GetRoomsSchedule()
+        public string[,] GetRoomsSchedule()
         {
             var rangeRooms = $"{sheet2}!A2:I100";
             return GetSchedule(9, rangeRooms);
         }
 
-        public string[][] GetLessonsSchedule()
+        public string[,] GetLessonsSchedule()
         {
             var rangeLessons = $"{sheet3}!A2:D100";
             return GetSchedule(4, rangeLessons);
         }
 
-        private string[][] GetSchedule(int rowsCount, string range)
+        private string[,] GetSchedule(int rowsCount, string range)
         {
             var request = service.Spreadsheets.Values.Get(SpreadsheetID, range);
             var response = request.Execute();
@@ -59,11 +60,11 @@ namespace GoogleSheets
             if (values == null)
                 throw new ArgumentNullException("Empty input schedule!");
 
-            var schedule = new string[rowsCount][];
-            for (var i = 0; i < rowsCount; i++)
-            {
-                schedule[i] = new string[values.Count];
-            }
+            var schedule = new string[rowsCount, values.First().Count];
+            // for (var i = 0; i < rowsCount; i++)
+            // {
+            //     schedule[i] = new string[values.Count];
+            // }
 
             for (var i = 0; i < values.Count; i++)
             {
@@ -71,8 +72,8 @@ namespace GoogleSheets
                 for (var k = 0; k < row.Count; k++)
                 {
                     if (row[k].Equals(""))
-                        schedule[k][i] = null;
-                    else schedule[k][i] = row[k].ToString();
+                        schedule[i,k] = null;
+                    else schedule[k,i] = row[k].ToString();
                 }
             }
 
