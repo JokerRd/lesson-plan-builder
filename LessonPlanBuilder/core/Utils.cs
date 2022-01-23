@@ -3,6 +3,7 @@ using LessonPlanBuilder.api.model.enums;
 using LessonPlanBuilder.core.model;
 using LessonPlanBuilder.core.restrictions;
 using LessonPlanBuilder.core.services;
+using LessonPlanBuilder.test;
 
 namespace LessonPlanBuilder.core;
 
@@ -51,11 +52,9 @@ public class Utils
     {
         var table = new ScheduleCell[countDays, countLessons];
         var random = new Random();
-        Utils.PutRandomInTwoArray(table,
+        PutRandomInTwoArray(table,
             () => (ScheduleCell)random.Next(2));
         return table;
-
-        return CreateFreeScheduleCells(countDays, countLessons);
     }
 
     private static ScheduleCell[,] CreateFreeScheduleCells(int countDays, int countLessons)
@@ -188,5 +187,43 @@ public class Utils
         }
 
         return cells;
+    }
+
+
+    public static List<Row<Lesson>> CreateListRowLesson(int countDay, int countLesson)
+    {
+        var result = new List<Row<Lesson>>();
+        for (var i = 0; i < countDay; i++)
+        {
+            var cells = CreateCells(countLesson);
+            result.Add(new Row<Lesson>(cells, i + 1));
+        }
+
+        return result;
+    }
+
+
+    public static List<Lesson> GenerateLessons(InitLessonsData initLessonsData)
+    {
+        var teachers = CreateTeachers(initLessonsData.CountLessons, 
+            initLessonsData.CountDays, initLessonsData.CountLessonInDay);
+        var classrooms = CreateClassrooms(initLessonsData.CountTypeClassroom,
+            initLessonsData.CountDays, initLessonsData.CountLessonInDay);
+        var listAvailableClassroom = CreateHashSetClassroom(classrooms, 
+            initLessonsData.CountListHashSet, initLessonsData.CountListHashSet);
+        var subjects = CreateSubjectList(teachers, listAvailableClassroom);
+        return CreateLessons(subjects);
+    }
+
+    public static Queue<Lesson> CreateQueue(InitLessonsData initLessonsData)
+    {
+        var lessons = GenerateLessons(initLessonsData);
+        var queue = new Queue<Lesson>();
+        foreach (var lesson in lessons)
+        {
+            queue.Enqueue(lesson);
+        }
+
+        return queue;
     }
 }
