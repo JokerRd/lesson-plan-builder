@@ -61,10 +61,6 @@ namespace GoogleSheets
                 throw new ArgumentNullException("Empty input schedule!");
 
             var schedule = new string[rowsCount, values.First().Count];
-            // for (var i = 0; i < rowsCount; i++)
-            // {
-            //     schedule[i] = new string[values.Count];
-            // }
 
             for (var i = 0; i < values.Count; i++)
             {
