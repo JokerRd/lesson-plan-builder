@@ -1,5 +1,6 @@
 using System;
 using LessonPlanBuilder.api.model.enums;
+using DayOfWeek = LessonPlanBuilder.api.model.enums.DayOfWeek;
 
 namespace LessonPlanBuilder.api.model
 {
@@ -12,12 +13,12 @@ namespace LessonPlanBuilder.api.model
 			this.cells = cells;
 		}
 
-		public ScheduleCell this[DayOfWeek day, LessonNumber lesson]
+		public ScheduleCell this[DayOfWeek day, int lesson]
 		{
-			get => cells[(int)day, (int)lesson];
-			set => cells[(int)day, (int)lesson] = value;
+			get => cells[(int)day, lesson];
+			set => cells[(int)day, lesson] = value;
 		}
-		
+
 		public ScheduleCell this[int day, int lesson]
 		{
 			get => cells[day, lesson];
