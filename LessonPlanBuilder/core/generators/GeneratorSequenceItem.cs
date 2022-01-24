@@ -74,7 +74,7 @@ namespace LessonPlanBuilder.core.generators
             foreach (var e in sortedSubsWithGrades)
             {
                 if (dict.Count == 0 || 
-                    e.Value - dict.Last().Value <= averageGradeDifference)
+                    e.Value - dict.First().Value <= averageGradeDifference)
                 {
                     dict.Add(e.Key, e.Value);
                     if (e.Equals(sortedSubsWithGrades.Last()))
