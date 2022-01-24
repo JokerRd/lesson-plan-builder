@@ -12,7 +12,7 @@ namespace LessonPlanBuilder.core.generators
         private Dictionary<Subject, double> sortedSubsWithGrades;
         private double averageGradeDifference;
         private List<Dictionary<Subject, double>> groupedSubjectWithLowDifference = new();
-        private Dictionary<Subject, double> currentShuffledDict;
+        private List<Subject> currentShuffledList;
         private List<int> alreadyGeneratedSequences = new();
         private Queue<Lesson> generatedSequence;
 
@@ -42,9 +42,9 @@ namespace LessonPlanBuilder.core.generators
 
             generatedSequence = new Queue<Lesson>();
             var i = 0;
-            foreach (var e in currentShuffledDict)
+            foreach (var e in currentShuffledList)
             {
-                var lesson = new Lesson(e.Key, i);
+                var lesson = new Lesson(e, i);
                 generatedSequence.Enqueue(lesson);
                 i++;
             }
@@ -106,23 +106,31 @@ namespace LessonPlanBuilder.core.generators
         private bool ShuffleSameGradeInDict()
         {
             var rnd = new Random();
-            currentShuffledDict = new Dictionary<Subject, double>();
+            currentShuffledList = new List<Subject>();
             foreach (var e in groupedSubjectWithLowDifference)
             {
-                var field = e
+                var groupedWithRepeatItems = new List<Subject>();
+                foreach (var j in e)
+                {
+                    for (var i = 0; i < j.Key.LessonsCount; i++)
+                    {
+                        groupedWithRepeatItems.Add(j.Key);
+                    }
+                }
+
+                var field = groupedWithRepeatItems
                     .OrderBy(s => rnd.NextDouble())
-                    .ToDictionary(pair => pair.Key,
-                        pair => pair.Value);
+                    .ToList();
 
                 foreach (var k in field)
                 {
-                    currentShuffledDict.Add(k.Key, k.Value);
+                    currentShuffledList.Add(k);
                 }
             }
 
-            if (!alreadyGeneratedSequences.Contains(currentShuffledDict.GetHashCode()))
+            if (!alreadyGeneratedSequences.Contains(currentShuffledList.GetHashCode()))
             {
-                alreadyGeneratedSequences.Add(currentShuffledDict.GetHashCode());
+                alreadyGeneratedSequences.Add(currentShuffledList.GetHashCode());
                 return true;
             }
 
