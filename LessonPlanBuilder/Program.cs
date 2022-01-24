@@ -6,12 +6,22 @@ using LessonPlanBuilder.core.restrictions;
 using LessonPlanBuilder.core.services;
 using LessonPlanBuilder.core.subjectAppraiser;
 using Ninject;
+using GoogleSheets;
 
 namespace LessonPlanBuilder
 {
     public class Program
     {
         public static void Main(string[] args)
+        {
+            var google = new GoogleInitialization();
+            var tableTeachers = google.GetTeachersSchedule();
+            var tableClassrooms = google.GetRoomsSchedule();
+            var tableLessons = google.GetLessonsSchedule();
+            
+        }
+
+        private static void test()
         {
             var teachers = Utils.CreateTeachers(8, 6, 7);
             var classrooms = Utils.CreateClassrooms(10, 6, 7);
@@ -20,7 +30,7 @@ namespace LessonPlanBuilder
             var lessons = Utils.CreateLessons(subjects);
             var gradeLessons = Utils.CreateGradeLessons(subjects, 3);
             var manager = Init(lessons);
-            var lessonPlans = manager.GenerateLessonPlan(6, 7, 5, gradeLessons);
+            var lessonPlans = manager.GenerateLessonPlan(6, 7, 5);
             var lessonPlansStrings = ParserLessonPlanToOutputTable.ParseLessonPlanToTable(lessonPlans, 6, 7);
             /*foreach (var lessonPlan in lessonPlansStrings)
             {

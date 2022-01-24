@@ -3,49 +3,55 @@ using LessonPlanBuilder.api.tableHeadingsGenerator;
 
 namespace LessonPlanBuilder.api.initializer;
 
-public static class Initializer
+public class Initializer
 {
-	public static IEnumerable<Subject> InitializeSubjects(string[,] subjectsTable, string[,] teachersTable,
+	private readonly TableParser parser;
+
+	public Initializer(TableParser parser)
+	{
+		this.parser = parser;
+	}
+
+	public IEnumerable<Subject> InitializeSubjects(string[,] subjectsTable, string[,] teachersTable,
 		string[,] classroomsTable)
 	{
 		CheckIntegrity(subjectsTable, teachersTable, classroomsTable);
 		var teachers = InitializeTeachers(teachersTable);
 		var classrooms = InitializeClassrooms(classroomsTable);
-		return subjectsTable.GetColumns().Select(column => TableParser.ParseSubject(column, teachers, classrooms));
+		return GetColumns(subjectsTable).Select(column => TableParser.ParseSubject(column, teachers, classrooms));
 	}
 
-	private static Dictionary<string, Teacher> InitializeTeachers(string[,] teachersTable)
+	private Dictionary<string, Teacher> InitializeTeachers(string[,] teachersTable)
 	{
-		return teachersTable.GetColumns()
-			.Select(TableParser.ParseTeacher)
+		return GetColumns(teachersTable)
+			.Select(parser.ParseTeacher)
 			.ToDictionary(teacher => teacher.Name);
 	}
 
-	private static Dictionary<string, HashSet<Classroom>> InitializeClassrooms(string[,] classroomsTable)
+	private Dictionary<string, HashSet<Classroom>> InitializeClassrooms(string[,] classroomsTable)
 	{
-		return classroomsTable.GetColumns()
-			.Select(TableParser.ParseClassroom)
-			.ToDictionary(classroom => classroom.ClassroomType, _ => new HashSet<Classroom>());
+		var classrooms = new Dictionary<string, HashSet<Classroom>>();
+		foreach (var classroom in GetColumns(classroomsTable).Select(parser.ParseClassroom))
+		{
+			if (!classrooms.ContainsKey(classroom.ClassroomType))
+				classrooms.Add(classroom.ClassroomType, new HashSet<Classroom>());
+
+			classrooms[classroom.ClassroomType].Add(classroom);
+		}
+
+		return classrooms;
 	}
 
-	private static IEnumerable<string[]> GetColumns(this string[,] table)
+	private static IEnumerable<string[]> GetColumns(string[,] table)
 	{
 		var columnsCount = table.GetLength(0);
 		var rowsCount = table.GetLength(1);
 
-		if (columnsCount < 2)
+		if (columnsCount < 1)
 			throw new Exception("В одной из входных таблиц нет данных");
 
-		foreach (var columnIndex in Enumerable.Range(1, columnsCount - 1))
+		foreach (var columnIndex in Enumerable.Range(0, columnsCount))
 			yield return Enumerable.Range(0, rowsCount).Select(rowIndex => table[columnIndex, rowIndex]).ToArray();
-
-		/* Если входная талица не содержит оглавление
-		 if (columnsCount < 1)
-			throw new Exception("В одной из входных таблиц нет данных");
-
-		foreach (var columnIndex in Enumerable.Range(0, columnsCount)) // Если входная талица не содержит оглавление
-			yield return Enumerable.Range(0, rowsCount).Select(rowIndex => table[columnIndex, rowIndex]).ToArray();
-		*/
 	}
 
 	private static void CheckIntegrity(string[,] subjectsTable, string[,] teachersTable, string[,] classroomsTable)
