@@ -20,7 +20,7 @@ namespace LessonPlanBuilder
             var lessons = Utils.CreateLessons(subjects);
             var gradeLessons = Utils.CreateGradeLessons(subjects, 3);
             var manager = Init(lessons);
-            var lessonPlans = manager.GenerateLessonPlan(6, 7, 5, gradeLessons);
+            var lessonPlans = manager.GenerateLessonPlan(6, 7, 5);
             var lessonPlansStrings = ParserLessonPlanToOutputTable.ParseLessonPlanToTable(lessonPlans, 6, 7);
             /*foreach (var lessonPlan in lessonPlansStrings)
             {

@@ -6,14 +6,14 @@ using LessonPlanBuilder.core.subjectAppraiser;
 
 namespace LessonPlanBuilder.core
 {
-    public class Manager
+    public class Manager : IManager
     {
         private ITableManager<Lesson> TableManager { get; }
         private Appraiser<Subject> SubjectAppraiser { get; }
         private IGeneratorSequenceItem<Subject, Lesson> Generator { get; }
         
         
-        public Manager(TableManager<Lesson> tableManager, IGeneratorSequenceItem<Subject, Lesson> generator, 
+        public Manager(ITableManager<Lesson> tableManager, IGeneratorSequenceItem<Subject, Lesson> generator, 
             Appraiser<Subject> subjectAppraiser)
         {
             TableManager = tableManager;
@@ -22,8 +22,7 @@ namespace LessonPlanBuilder.core
         }
 
 
-        public List<LessonPlan> GenerateLessonPlan(int countRow, int countCell, int countLessonPlan, 
-            Dictionary<Subject, int> gradeLessons)
+        public List<LessonPlan> GenerateLessonPlan(int countRow, int countCell, int countLessonPlan)
         {
             var lessonPlans = new List<LessonPlan>();
             for (var i = 0; i < countLessonPlan; i++)
