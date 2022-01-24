@@ -39,5 +39,6 @@ public class TestInitializer
 		var subjects = initializer.InitializeSubjects(subjectsTable, teachersTable, classroomsTable).ToList();
 
 		Assert.AreEqual(subjects.Count, 1);
+		Assert.AreEqual(subjects.First().Teacher.Name, "Вася");
 	}
 }

@@ -55,18 +55,16 @@ public class TableParser
 	{
 		var teacherName = column[0];
 
-		var schedule = ParseSchedule(column[1..]);
-		return new Teacher(teacherName, schedule);
-		
-		/*try
+		try
 		{
-			var schedule = ParseSchedule(column[2..]);
+			var schedule = ParseSchedule(column[1..]);
 			return new Teacher(teacherName, schedule);
 		}
 		catch (Exception e)
 		{
-			throw new Exception($"Не удалось распознать расписание для преподавателя \"{teacherName}\". {e.Message}", e);
-		}*/
+			throw new Exception($"Не удалось распознать расписание для преподавателя \"{teacherName}\". {e.Message}",
+				e);
+		}
 	}
 
 	private Schedule ParseSchedule(IReadOnlyList<string> weeklySchedule)
@@ -88,8 +86,13 @@ public class TableParser
 
 	public HashSet<int> GetFreeLessons(string scheduleCell)
 	{
+
+		
 		var freeCells = new HashSet<int>();
+		if (scheduleCell.Trim() == "") return freeCells;
+		
 		var cellContent = scheduleCell.Split(",", StringSplitOptions.TrimEntries);
+		
 		foreach (var value in cellContent)
 		{
 			if (value.Length == 1)

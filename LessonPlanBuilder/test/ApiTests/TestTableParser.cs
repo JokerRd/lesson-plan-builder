@@ -39,7 +39,7 @@ public class TestTableParser
 	}
 
 	[Test]
-	public void GetFreeLessons_OnSinglyRangeWithCorrectData()
+	public void GetFreeLessons_OnSingleRangeWithCorrectData()
 	{
 		var actual = parser.GetFreeLessons("1-3").ToArray();
 		Assert.AreEqual(new[] { 1, 2, 3 }, actual);
@@ -51,13 +51,13 @@ public class TestTableParser
 	[TestCase("3-2")]
 	[TestCase("-1-2")]
 	[TestCase("10-12")]
-	public void GetFreeLessons_OnSinglyRangeWithIncorrectData(string cell)
+	public void GetFreeLessons_OnSingleRangeWithIncorrectData(string cell)
 	{
 		Assert.Throws<Exception>(() => parser.GetFreeLessons(cell), "Некорректные значения");
 	}
 
 	[Test]
-	public void GetFreeLessons_OnLotOfSinglesValueWithCorrectDat1a1()
+	public void GetFreeLessons_OnRepeatedRangeWithCorrectData()
 	{
 		var actual = parser.GetFreeLessons("2-3, 5-7").ToArray();
 		Assert.AreEqual(new[] { 2, 3, 5, 6, 7 }, actual);
@@ -73,13 +73,20 @@ public class TestTableParser
 			"Значения, меньше нуля, или больше максимального количества проводимых уроков в день в аудитории недопустимы");
 	}
 
-
-	[TestCase("")]
 	[TestCase("word")]
 	[TestCase("1--2")]
-	[TestCase(",,,")]
 	public void GetFreeLessons_OnIncorrectValue(string cell)
 	{
 		Assert.Throws<Exception>(() => parser.GetFreeLessons(cell), "Некорректные значения");
+	}
+
+	[TestCase("")]
+	[TestCase(" ")]
+	[TestCase("		")]
+	[TestCase("    ")]
+	public void GetFreeLessons_OnEmptyData(string cell)
+	{
+		var actual = parser.GetFreeLessons(cell).ToArray();
+		Assert.AreEqual(Array.Empty<int>(), actual);
 	}
 }
