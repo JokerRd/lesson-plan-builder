@@ -30,9 +30,16 @@ public class Initializer
 
 	private Dictionary<string, HashSet<Classroom>> InitializeClassrooms(string[,] classroomsTable)
 	{
-		return GetColumns(classroomsTable)
-			.Select(parser.ParseClassroom)
-			.ToDictionary(classroom => classroom.ClassroomType, _ => new HashSet<Classroom>());
+		var classrooms = new Dictionary<string, HashSet<Classroom>>();
+		foreach (var classroom in GetColumns(classroomsTable).Select(parser.ParseClassroom))
+		{
+			if (!classrooms.ContainsKey(classroom.ClassroomType))
+				classrooms.Add(classroom.ClassroomType, new HashSet<Classroom>());
+
+			classrooms[classroom.ClassroomType].Add(classroom);
+		}
+
+		return classrooms;
 	}
 
 	private static IEnumerable<string[]> GetColumns(string[,] table)

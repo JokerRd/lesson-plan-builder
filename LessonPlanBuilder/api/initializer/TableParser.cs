@@ -77,7 +77,7 @@ public class TableParser
 			foreach (var lesson in Enumerable.Range(0, maxLoadOfClassroomPerDay))
 			{
 				schedule[(DayOfWeek)dayOfWeek, lesson] =
-					freeLessons.Contains(lesson) ? ScheduleCell.Free : ScheduleCell.Impossible;
+					freeLessons.Contains(lesson + 1) ? ScheduleCell.Free : ScheduleCell.Impossible;
 			}
 		}
 
@@ -86,13 +86,10 @@ public class TableParser
 
 	public HashSet<int> GetFreeLessons(string scheduleCell)
 	{
-
-		
 		var freeCells = new HashSet<int>();
 		if (scheduleCell is null || scheduleCell.Trim() == "") return freeCells;
-		
 		var cellContent = scheduleCell.Split(",", StringSplitOptions.TrimEntries);
-		
+
 		foreach (var value in cellContent)
 		{
 			if (value.Length == 1)
