@@ -8,7 +8,7 @@ using Google.Apis.Sheets.v4.Data;
 
 namespace GoogleSheets
 {
-    class GoogleInitialization
+    public class GoogleInitialization
     {
         private readonly string[] Scopes = {SheetsService.Scope.Spreadsheets};
         private readonly string ApplicationName = "Project";
