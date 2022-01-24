@@ -4,7 +4,7 @@ using LessonPlanBuilder.core.generators;
 using LessonPlanBuilder.core.model;
 using LessonPlanBuilder.core.subjectAppraiser;
 
-namespace LessonPlanBuilder.core
+namespace LessonPlanBuilder.core.managers
 {
     public class ManagerLessonBuilder : IManagerLessonBuilder
     {

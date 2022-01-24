@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using LessonPlanBuilder.core.model;
 
-namespace LessonPlanBuilder.core
+namespace LessonPlanBuilder.core.managers
 {
     public interface ITableManager<TItem>
     {

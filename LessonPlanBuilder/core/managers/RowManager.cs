@@ -1,7 +1,7 @@
 using LessonPlanBuilder.core.model;
 using LessonPlanBuilder.core.services;
 
-namespace LessonPlanBuilder.core
+namespace LessonPlanBuilder.core.managers
 {
     public class RowManager<TItem> : IRowManager<TItem>
     {

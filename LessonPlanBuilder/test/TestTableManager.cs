@@ -1,5 +1,6 @@
 using LessonPlanBuilder.api.model;
 using LessonPlanBuilder.core;
+using LessonPlanBuilder.core.managers;
 using LessonPlanBuilder.core.model;
 using LessonPlanBuilder.core.restrictions;
 using LessonPlanBuilder.core.services;

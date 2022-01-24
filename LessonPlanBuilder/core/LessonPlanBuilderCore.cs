@@ -1,4 +1,5 @@
 using LessonPlanBuilder.api;
+using LessonPlanBuilder.api.initializer;
 using LessonPlanBuilder.api.model;
 
 namespace LessonPlanBuilder.core
@@ -6,6 +7,7 @@ namespace LessonPlanBuilder.core
     public class LessonPlanBuilderCore : ILessonPlanBuilder
     {
         private InitializerDiContainer? initializerDiContainer;
+        
 
         public List<LessonPlan> GenerateLessonPlan(List<Subject> subjects, GenerateSettings generateSettings)
         {
@@ -13,6 +15,11 @@ namespace LessonPlanBuilder.core
             var manager = initializerDiContainer!.GetManager();
             return manager.GenerateLessonPlan(generateSettings.CountDay,
                 generateSettings.CountLessonPerDay, generateSettings.CountLessonPlan);
+        }
+
+        public Initializer GetInitializerModel()
+        {
+            return initializerDiContainer!.GetInitializer();
         }
 
         private void InitializeDiContainer(List<Subject> subjects, GenerateSettings settings)

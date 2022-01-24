@@ -8,6 +8,8 @@ using LessonPlanBuilder.core.subjectAppraiser;
 using Ninject;
 using GoogleSheets;
 using LessonPlanBuilder.api.initializer;
+using LessonPlanBuilder.core.managers;
+using LessonPlanBuilder.test;
 
 namespace LessonPlanBuilder
 {
@@ -19,10 +21,10 @@ namespace LessonPlanBuilder
             var tableTeachers = google.GetTeachersSchedule();
             var tableClassrooms = google.GetRoomsSchedule();
             var tableLessons = google.GetLessonsSchedule();
-            var initializer = new Initializer(new TableParser(8));
+            var lessonPlanBuilder = new LessonPlanBuilderCore();
+            var initializer = lessonPlanBuilder.GetInitializerModel();
             var lessons = initializer.InitializeSubjects(tableLessons, tableTeachers, tableClassrooms)
                 .ToList();
-            var lessonPlanBuilder = new LessonPlanBuilderCore();
             var lessonPlan = lessonPlanBuilder.GenerateLessonPlan(lessons,
                 new GenerateSettings(5, 7, 8, 4));
             var tables = ParserLessonPlanToOutputTable.ParseLessonPlanToTable(lessonPlan, 7, 8);

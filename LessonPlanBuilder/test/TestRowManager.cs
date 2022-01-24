@@ -1,6 +1,7 @@
 using LessonPlanBuilder.api.model;
 using LessonPlanBuilder.api.model.enums;
 using LessonPlanBuilder.core;
+using LessonPlanBuilder.core.managers;
 using LessonPlanBuilder.core.model;
 using LessonPlanBuilder.core.services;
 using LessonPlanBuilder.test.utils;

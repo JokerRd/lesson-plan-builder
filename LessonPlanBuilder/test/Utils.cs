@@ -3,9 +3,8 @@ using LessonPlanBuilder.api.model.enums;
 using LessonPlanBuilder.core.model;
 using LessonPlanBuilder.core.restrictions;
 using LessonPlanBuilder.core.services;
-using LessonPlanBuilder.test;
 
-namespace LessonPlanBuilder.core;
+namespace LessonPlanBuilder.test;
 
 public class Utils
 {

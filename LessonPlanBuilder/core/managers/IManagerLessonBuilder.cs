@@ -1,7 +1,6 @@
 using LessonPlanBuilder.api;
-using LessonPlanBuilder.api.model;
 
-namespace LessonPlanBuilder.core;
+namespace LessonPlanBuilder.core.managers;
 
 public interface IManagerLessonBuilder
 {

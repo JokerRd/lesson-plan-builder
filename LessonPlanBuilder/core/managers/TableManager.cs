@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using LessonPlanBuilder.core.model;
 using LessonPlanBuilder.core.services;
 
-namespace LessonPlanBuilder.core
+namespace LessonPlanBuilder.core.managers
 {
     public class TableManager<TItem> : ITableManager<TItem>
     {
