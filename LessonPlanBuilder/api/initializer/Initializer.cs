@@ -3,32 +3,39 @@ using LessonPlanBuilder.api.tableHeadingsGenerator;
 
 namespace LessonPlanBuilder.api.initializer;
 
-public static class Initializer
+public class Initializer
 {
-	public static IEnumerable<Subject> InitializeSubjects(string[,] subjectsTable, string[,] teachersTable,
+	private readonly TableParser parser;
+
+	public Initializer(TableParser parser)
+	{
+		this.parser = parser;
+	}
+
+	public IEnumerable<Subject> InitializeSubjects(string[,] subjectsTable, string[,] teachersTable,
 		string[,] classroomsTable)
 	{
 		CheckIntegrity(subjectsTable, teachersTable, classroomsTable);
 		var teachers = InitializeTeachers(teachersTable);
 		var classrooms = InitializeClassrooms(classroomsTable);
-		return subjectsTable.GetColumns().Select(column => TableParser.ParseSubject(column, teachers, classrooms));
+		return GetColumns(subjectsTable).Select(column => TableParser.ParseSubject(column, teachers, classrooms));
 	}
 
-	private static Dictionary<string, Teacher> InitializeTeachers(string[,] teachersTable)
+	private Dictionary<string, Teacher> InitializeTeachers(string[,] teachersTable)
 	{
-		return teachersTable.GetColumns()
-			.Select(TableParser.ParseTeacher)
+		return GetColumns(teachersTable)
+			.Select(parser.ParseTeacher)
 			.ToDictionary(teacher => teacher.Name);
 	}
 
-	private static Dictionary<string, HashSet<Classroom>> InitializeClassrooms(string[,] classroomsTable)
+	private Dictionary<string, HashSet<Classroom>> InitializeClassrooms(string[,] classroomsTable)
 	{
-		return classroomsTable.GetColumns()
-			.Select(TableParser.ParseClassroom)
+		return GetColumns(classroomsTable)
+			.Select(parser.ParseClassroom)
 			.ToDictionary(classroom => classroom.ClassroomType, _ => new HashSet<Classroom>());
 	}
 
-	private static IEnumerable<string[]> GetColumns(this string[,] table)
+	private static IEnumerable<string[]> GetColumns(string[,] table)
 	{
 		var columnsCount = table.GetLength(0);
 		var rowsCount = table.GetLength(1);

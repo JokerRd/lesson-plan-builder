@@ -1,11 +1,19 @@
 ﻿using LessonPlanBuilder.api.initializer;
 using NUnit.Framework;
 
-namespace LessonPlanBuilder.test;
+namespace LessonPlanBuilder.test.ApiTests;
 
 [TestFixture]
 public class TestInitializer
 {
+	private static Initializer initializer;
+
+	[SetUp]
+	public void Init()
+	{
+		initializer = new Initializer(new TableParser(8));
+	}
+
 	[Test]
 	public void Create()
 	{
@@ -17,7 +25,7 @@ public class TestInitializer
 		var teachersTable = new[,]
 		{
 			{ "ФИО Преподавателя", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" },
-			{ "Вася", "1-3", "", "", "", "", "", ""}
+			{ "Вася", "1", "1", "1", "1", "1", "1", "1" }
 		};
 		var classroomsTable = new[,]
 		{
@@ -25,10 +33,10 @@ public class TestInitializer
 				"Название аудитории", "Тип аудитории", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница",
 				"Суббота", "Воскресенье"
 			},
-			{ "Р-100", "Обычная", "1-3", "1-3", "1-3", "1-3", "1-3", "1", "1" }
+			{ "Р-100", "Обычная", "1", "1", "1", "1", "1", "1", "1" }
 		};
 
-		var subjects = Initializer.InitializeSubjects(subjectsTable, teachersTable, classroomsTable).ToList();
+		var subjects = initializer.InitializeSubjects(subjectsTable, teachersTable, classroomsTable).ToList();
 
 		Assert.AreEqual(subjects.Count, 1);
 	}

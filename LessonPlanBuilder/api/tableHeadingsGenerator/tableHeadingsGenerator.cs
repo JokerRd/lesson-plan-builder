@@ -7,9 +7,6 @@ public static class Generator
 	public const int ClassroomsRowsCount = 9;
 	public const int SubjectsRowsCount = 4;
 
-	// TODO Эту константу должен задавать пользователь
-	public const int MaxLoadOfClassroomPerDay = 8;
-
 	private static readonly string[] DaysOfWeek =
 		{ "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
 
