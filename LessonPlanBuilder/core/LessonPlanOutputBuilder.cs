@@ -26,6 +26,8 @@ public class LessonPlanOutputBuilder
     {
         return cell.IsEmpty ? new ApprovedLesson() 
             : new ApprovedLesson(cell.Item.Subject.Name,
-                cell.Item.Subject.Teacher.Name, cell.Item.Subject.ClassroomType);
+                cell.Item.Subject.Teacher.Name, cell.Item.Subject.AvailableClassrooms.First().Name);
     }
+    
+    
 }

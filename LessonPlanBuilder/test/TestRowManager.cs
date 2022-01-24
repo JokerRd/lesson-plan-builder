@@ -37,7 +37,7 @@ public class TestRowManager
     public void IsCorrectResultIfPuttItemInLastCellInRow()
     {
         var rowManager = new RowManager<Lesson>(shifter, cellService);
-        var result = rowManager.TryPutItemInRow(testLesson, row, 7);
+        var result = rowManager.TryPutItemInRow(testLesson, row, 7, () => { });
         Assert.IsFalse(result.IsPut);
     }
     
@@ -45,7 +45,7 @@ public class TestRowManager
     public void IsCorrectResultIfPuttItemInFirstCellInRow()
     {
         var rowManager = new RowManager<Lesson>(shifter, cellService);
-        var result = rowManager.TryPutItemInRow(testLesson, row, 0);
+        var result = rowManager.TryPutItemInRow(testLesson, row, 0, () => { });
         Assert.IsTrue(result.IsPut);
     }
     
@@ -56,7 +56,7 @@ public class TestRowManager
             .CreateCellServiceFilledRestrictions(() => new TestFalseRestrictions(),
                 10, _ => { });
         var rowManager = new RowManager<Lesson>(shifter, service);
-        var result = rowManager.TryPutItemInRow(testLesson, row, 0);
+        var result = rowManager.TryPutItemInRow(testLesson, row, 0, () => { });
         Assert.IsFalse(result.IsPut);
     }
     

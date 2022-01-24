@@ -7,6 +7,7 @@ using LessonPlanBuilder.core.services;
 using LessonPlanBuilder.core.subjectAppraiser;
 using Ninject;
 using GoogleSheets;
+using LessonPlanBuilder.api.initializer;
 
 namespace LessonPlanBuilder
 {
@@ -18,7 +19,15 @@ namespace LessonPlanBuilder
             var tableTeachers = google.GetTeachersSchedule();
             var tableClassrooms = google.GetRoomsSchedule();
             var tableLessons = google.GetLessonsSchedule();
-            
+            var initializer = new Initializer(new TableParser(8));
+            var lessons = initializer.InitializeSubjects(tableLessons, tableTeachers, tableClassrooms)
+                .ToList();
+            var lessonPlanBuilder = new LessonPlanBuilderCore();
+            var lessonPlan = lessonPlanBuilder.GenerateLessonPlan(lessons,
+                new GenerateSettings(5, 7, 8, 4));
+            var tables = ParserLessonPlanToOutputTable.ParseLessonPlanToTable(lessonPlan, 7, 8);
+            google.WriteToSheets(tables);
+            Console.WriteLine();
         }
 
         private static void test()
@@ -38,7 +47,7 @@ namespace LessonPlanBuilder
             }*/
         }
 
-        public static Manager Init(List<Lesson> lessons)
+        public static ManagerLessonBuilder Init(List<Lesson> lessons)
         {
             var container = new StandardKernel();
             container.Bind<IShifter<Lesson>>().To<Shifter<Lesson>>();
@@ -58,8 +67,8 @@ namespace LessonPlanBuilder
             container.Bind<IGeneratorSequenceItem<Subject, Lesson>>().ToConstant(new GeneratorSequenceItem(subjects));
             container.Bind<ITableManager<Lesson>>().To<TableManager<Lesson>>();
             container.Bind<Appraiser<Subject>>().ToConstant(new SubjectAppraiser(6, 7));
-            container.Bind<Manager>().ToSelf();
-            return container.Get<Manager>();
+            container.Bind<ManagerLessonBuilder>().ToSelf();
+            return container.Get<ManagerLessonBuilder>();
         }
     }
 }

@@ -11,7 +11,7 @@ public class ClassroomFreeRestriction : IRestrictionOnCell<Lesson>
         var cell = row.Cells[indexInPut];
         var classrooms = item.Subject.AvailableClassrooms;
         var result = classrooms
-            .Any(classroom => classroom.Schedule[row.Number, cell.Number] != ScheduleCell.Busy);
+            .Any(classroom => classroom.Schedule[row.Number, cell.Number] != ScheduleCell.Impossible);
         return result;
     }
 }

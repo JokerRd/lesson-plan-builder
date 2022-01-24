@@ -3,7 +3,7 @@ using LessonPlanBuilder.api.model;
 
 namespace LessonPlanBuilder.core
 {
-    public class LessonPlanBuilder : ILessonPlanBuilder
+    public class LessonPlanBuilderCore : ILessonPlanBuilder
     {
         private InitializerDiContainer? initializerDiContainer;
 

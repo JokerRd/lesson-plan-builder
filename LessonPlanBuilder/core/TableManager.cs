@@ -19,7 +19,7 @@ namespace LessonPlanBuilder.core
 
         public bool TryPutItemsInTable(List<Row<TItem>> rows, Queue<TItem> items)
         {
-            var item = items.Dequeue();
+            var item = items.Peek();
             foreach (var row in rows)
             {
                 if (RowService.IsPutInRow(item, row))
@@ -27,7 +27,7 @@ namespace LessonPlanBuilder.core
                     var index = 0;
                     while (index < row.Cells.Length)
                     {
-                        var resultPutItem = RowManager.TryPutItemInRow(item, row, index);
+                        var resultPutItem = RowManager.TryPutItemInRow(item, row, index, () => items.Dequeue());
                         if (!resultPutItem.IsPut)
                         {
                             break;
@@ -38,7 +38,8 @@ namespace LessonPlanBuilder.core
                             return true;
                         }
 
-                        item = items.Dequeue();
+
+                        item = items.Peek();
                         index = resultPutItem.IndexPut + 1;
                     }
                 }

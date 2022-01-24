@@ -6,14 +6,14 @@ using LessonPlanBuilder.core.subjectAppraiser;
 
 namespace LessonPlanBuilder.core
 {
-    public class Manager : IManager
+    public class ManagerLessonBuilder : IManagerLessonBuilder
     {
         private ITableManager<Lesson> TableManager { get; }
         private Appraiser<Subject> SubjectAppraiser { get; }
         private IGeneratorSequenceItem<Subject, Lesson> Generator { get; }
         
         
-        public Manager(ITableManager<Lesson> tableManager, IGeneratorSequenceItem<Subject, Lesson> generator, 
+        public ManagerLessonBuilder(ITableManager<Lesson> tableManager, IGeneratorSequenceItem<Subject, Lesson> generator, 
             Appraiser<Subject> subjectAppraiser)
         {
             TableManager = tableManager;
@@ -29,7 +29,13 @@ namespace LessonPlanBuilder.core
             {
                 var table = CreateTable(countRow, countCell);
                 var items = Generator.Generate(SubjectAppraiser);
-                if (TableManager.TryPutItemsInTable(table, items))
+                var isBuildLessonPlan = TableManager.TryPutItemsInTable(table, items);
+                if (!isBuildLessonPlan)
+                {
+                    TryToPutMore(table, items, out isBuildLessonPlan);
+                }
+
+                if (isBuildLessonPlan)
                 {
                     lessonPlans.Add(LessonPlanOutputBuilder.CreateLessonPlan(table));
                     PrintTable(table);
@@ -37,6 +43,29 @@ namespace LessonPlanBuilder.core
             }
 
             return lessonPlans;
+        }
+
+        private void TryToPutMore(List<Row<Lesson>> table, Queue<Lesson> queue, out bool isBuildLessonPlan)
+        {
+            isBuildLessonPlan = false;
+            var residue = queue.Count;
+            var dynamicResidue = residue;
+            for (var i = 0; i < residue; i++)
+            {
+                isBuildLessonPlan = TableManager.TryPutItemsInTable(table, queue);
+                var queueCount = queue.Count;
+                if (isBuildLessonPlan || IsCountItemsDidNotChange(dynamicResidue, queueCount))
+                {
+                    break;
+                }
+
+                dynamicResidue = queueCount;
+            }
+        }
+
+        private bool IsCountItemsDidNotChange(int residue, int queueCount)
+        {
+            return residue == queueCount;
         }
 
         private void PrintTable(List<Row<Lesson>> table)

@@ -31,7 +31,7 @@ namespace LessonPlanBuilder.core.generators
                 GetAverageSubjectGradeDifference();
                 GroupSubjectsWithDifferenceLessThanAverage();
             }
-            
+
             var foundSequence = false;
             while (true)
             {
@@ -73,7 +73,7 @@ namespace LessonPlanBuilder.core.generators
             var dict = new Dictionary<Subject, double>();
             foreach (var e in sortedSubsWithGrades)
             {
-                if (dict.Count == 0 || 
+                if (dict.Count == 0 ||
                     e.Value - dict.First().Value <= averageGradeDifference)
                 {
                     dict.Add(e.Key, e.Value);
@@ -102,7 +102,7 @@ namespace LessonPlanBuilder.core.generators
                 }
             }
         }
-        
+
         private bool ShuffleSameGradeInDict()
         {
             var rnd = new Random();

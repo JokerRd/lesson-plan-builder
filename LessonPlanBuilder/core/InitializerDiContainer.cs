@@ -19,9 +19,9 @@ public class InitializerDiContainer
         InitializeRestriction(settings);
     }
 
-    public IManager GetManager()
+    public IManagerLessonBuilder GetManager()
     {
-        return container.Get<Manager>();
+        return container.Get<ManagerLessonBuilder>();
     }
 
     private void InitializeService(List<Subject> lessons, GenerateSettings settings)
@@ -34,7 +34,7 @@ public class InitializerDiContainer
         container.Bind<ITableManager<Lesson>>().To<TableManager<Lesson>>();
         container.Bind<Appraiser<Subject>>().ToConstant(new SubjectAppraiser(settings.CountDay,
             settings.CountLessonPerDay));
-        container.Bind<IManager>().To<Manager>();
+        container.Bind<IManagerLessonBuilder>().To<ManagerLessonBuilder>();
     }
 
 
@@ -46,5 +46,7 @@ public class InitializerDiContainer
         container.Bind<IRestrictionOnCell<Lesson>>().To<ClassroomFreeRestriction>();
         container.Bind<IRestrictionOnCell<Lesson>>().To<SuitableClassroomType>();
         container.Bind<IRestrictionOnCell<Lesson>>().To<TeacherFreeRestriction>();
+        container.Bind<IRestrictionOnCell<Lesson>>().To<OccupiedCellRestriction>();
+        container.Bind<IRestrictionOnRow<Lesson>>().To<NoMoreThanTwoTypesLessonPerDayRestrictionRow>();
     }
 }

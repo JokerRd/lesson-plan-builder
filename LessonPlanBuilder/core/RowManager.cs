@@ -15,13 +15,14 @@ namespace LessonPlanBuilder.core
             CellService = cellService;
         }
 
-        public ResultPutItem TryPutItemInRow(TItem item, Row<TItem> row, int start)
+        public ResultPutItem TryPutItemInRow(TItem item, Row<TItem> row, int start, Action downCountItems)
         {
             var cells = row.Cells;
             for (var i = start; i < cells.Length; i++)
             {
                 if (CellService.IsPutInCell(item, row, i))
                 {
+                    downCountItems.Invoke();
                     Shifter.PutInCell(item, cells[i]);
                     return new ResultPutItem(true, i);
                 }
