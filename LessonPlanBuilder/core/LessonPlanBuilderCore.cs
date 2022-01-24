@@ -17,8 +17,9 @@ namespace LessonPlanBuilder.core
                 generateSettings.CountLessonPerDay, generateSettings.CountLessonPlan);
         }
 
-        public Initializer GetInitializerModel()
+        public Initializer GetInitializerModel(List<Subject> subjects, GenerateSettings settings)
         {
+            InitializeDiContainer(subjects, settings);
             return initializerDiContainer!.GetInitializer();
         }
 

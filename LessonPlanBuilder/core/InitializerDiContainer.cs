@@ -19,7 +19,6 @@ public class InitializerDiContainer
         container = new StandardKernel();
         InitializeService(lessons, settings);
         InitializeRestriction(settings);
-        InitializeParserModel();
     }
 
     public IManagerLessonBuilder GetManager()
@@ -56,11 +55,5 @@ public class InitializerDiContainer
         container.Bind<IRestrictionOnCell<Lesson>>().To<TeacherFreeRestriction>();
         container.Bind<IRestrictionOnCell<Lesson>>().To<OccupiedCellRestriction>();
         container.Bind<IRestrictionOnRow<Lesson>>().To<NoMoreThanTwoTypesLessonPerDayRestrictionRow>();
-    }
-
-    private void InitializeParserModel()
-    {
-        container.Bind<TableParser>().ToConstant(new TableParser(8));
-        container.Bind<Initializer>().ToSelf();
     }
 }
