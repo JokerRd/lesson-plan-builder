@@ -89,7 +89,7 @@ public class TableParser
 
 		
 		var freeCells = new HashSet<int>();
-		if (scheduleCell.Trim() == "") return freeCells;
+		if (scheduleCell is null || scheduleCell.Trim() == "") return freeCells;
 		
 		var cellContent = scheduleCell.Split(",", StringSplitOptions.TrimEntries);
 		

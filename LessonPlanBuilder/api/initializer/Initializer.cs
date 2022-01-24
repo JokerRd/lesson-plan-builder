@@ -40,19 +40,11 @@ public class Initializer
 		var columnsCount = table.GetLength(0);
 		var rowsCount = table.GetLength(1);
 
-		if (columnsCount < 2)
+		if (columnsCount < 1)
 			throw new Exception("В одной из входных таблиц нет данных");
 
-		foreach (var columnIndex in Enumerable.Range(1, columnsCount - 1))
+		foreach (var columnIndex in Enumerable.Range(0, columnsCount))
 			yield return Enumerable.Range(0, rowsCount).Select(rowIndex => table[columnIndex, rowIndex]).ToArray();
-
-		/* Если входная талица не содержит оглавление
-		 if (columnsCount < 1)
-			throw new Exception("В одной из входных таблиц нет данных");
-
-		foreach (var columnIndex in Enumerable.Range(0, columnsCount)) // Если входная талица не содержит оглавление
-			yield return Enumerable.Range(0, rowsCount).Select(rowIndex => table[columnIndex, rowIndex]).ToArray();
-		*/
 	}
 
 	private static void CheckIntegrity(string[,] subjectsTable, string[,] teachersTable, string[,] classroomsTable)

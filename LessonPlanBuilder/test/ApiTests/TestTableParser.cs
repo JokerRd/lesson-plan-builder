@@ -84,6 +84,7 @@ public class TestTableParser
 	[TestCase(" ")]
 	[TestCase("		")]
 	[TestCase("    ")]
+	[TestCase(null)]
 	public void GetFreeLessons_OnEmptyData(string cell)
 	{
 		var actual = parser.GetFreeLessons(cell).ToArray();
