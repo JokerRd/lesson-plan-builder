@@ -1,6 +1,6 @@
 ﻿namespace LessonPlanBuilder.core.subjectAppraiser;
 
-public class Appraiser<TItem>
+public abstract class Appraiser<TItem> 
 {
     public int[] RestrictionParameters { get; private set; }
     

@@ -9,7 +9,7 @@ namespace LessonPlanBuilder.core.generators
         /// <summary>
         /// Генерирует нужное количество расписаний
         /// </summary>
-        /// <param name="gradedLessons">
+        /// <param name="appraiser"> Класс для оценивания</param>
         /// Оценщик (то каким образом оценятся предметы)
         /// <returns>
         /// Очередь предметов в их простом представлении

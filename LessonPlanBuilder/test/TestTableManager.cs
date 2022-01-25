@@ -48,7 +48,7 @@ public class TestTableManager
     [Test]
     public void IsTrueIfLessonMatchForRestrictions()
     {
-        Assert.IsTrue(tableManager.TryPutItemsInTable(table, queueLesson));
+        Assert.IsTrue(tableManager.PutItemsInTable(table, queueLesson));
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class TestTableManager
             {
                 new TestFalseRestrictionRow()
             }));
-        Assert.IsFalse(newTableManager.TryPutItemsInTable(table, queueLesson));
+        Assert.IsFalse(newTableManager.PutItemsInTable(table, queueLesson));
     }
 
 

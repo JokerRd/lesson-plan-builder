@@ -51,7 +51,6 @@ public class InitializerDiContainer
         container.Bind<IRestrictionOnCell<Lesson>>().To<TwoConsecutiveLessonsRestriction>();
         container.Bind<IRestrictionOnRow<Lesson>>().ToConstant(new CountLessonPerDayRestriction(settings.MaxLessonPerDay));
         container.Bind<IRestrictionOnCell<Lesson>>().To<ClassroomFreeRestriction>();
-        container.Bind<IRestrictionOnCell<Lesson>>().To<SuitableClassroomType>();
         container.Bind<IRestrictionOnCell<Lesson>>().To<TeacherFreeRestriction>();
         container.Bind<IRestrictionOnCell<Lesson>>().To<OccupiedCellRestriction>();
         container.Bind<IRestrictionOnRow<Lesson>>().To<NoMoreThanTwoTypesLessonPerDayRestrictionRow>();

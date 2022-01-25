@@ -4,6 +4,6 @@ namespace LessonPlanBuilder.core.managers
 {
     public interface ITableManager<TItem>
     {
-        public bool TryPutItemsInTable(List<Row<TItem>> rows, Queue<TItem> items);
+        public bool PutItemsInTable(List<Row<TItem>> rows, Queue<TItem> items);
     }
 }

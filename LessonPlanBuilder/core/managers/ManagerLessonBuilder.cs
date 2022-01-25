@@ -29,7 +29,7 @@ namespace LessonPlanBuilder.core.managers
             {
                 var table = CreateTable(countRow, countCell);
                 var items = Generator.Generate(SubjectAppraiser);
-                var isBuildLessonPlan = TableManager.TryPutItemsInTable(table, items);
+                var isBuildLessonPlan = TableManager.PutItemsInTable(table, items);
                 if (!isBuildLessonPlan)
                 {
                     TryToPutMore(table, items, out isBuildLessonPlan);
@@ -38,7 +38,6 @@ namespace LessonPlanBuilder.core.managers
                 if (isBuildLessonPlan)
                 {
                     lessonPlans.Add(LessonPlanOutputBuilder.CreateLessonPlan(table));
-                    PrintTable(table);
                 }
             }
 
@@ -52,7 +51,7 @@ namespace LessonPlanBuilder.core.managers
             var dynamicResidue = residue;
             for (var i = 0; i < residue; i++)
             {
-                isBuildLessonPlan = TableManager.TryPutItemsInTable(table, queue);
+                isBuildLessonPlan = TableManager.PutItemsInTable(table, queue);
                 var queueCount = queue.Count;
                 if (isBuildLessonPlan || IsCountItemsDidNotChange(dynamicResidue, queueCount))
                 {

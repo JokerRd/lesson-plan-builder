@@ -16,7 +16,7 @@ namespace LessonPlanBuilder.core.managers
             RowManager = rowManager;
         }
 
-        public bool TryPutItemsInTable(List<Row<TItem>> rows, Queue<TItem> items)
+        public bool PutItemsInTable(List<Row<TItem>> rows, Queue<TItem> items)
         {
             var item = items.Peek();
             foreach (var row in rows)
